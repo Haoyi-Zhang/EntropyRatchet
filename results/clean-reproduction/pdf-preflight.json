@@ -1,0 +1,21 @@
+{
+  "all_fonts_embedded": true,
+  "all_fonts_subset": true,
+  "all_fonts_unicode_mapped": true,
+  "attachments": 0,
+  "encrypted": false,
+  "fonts_reported": 12,
+  "form_fields": 0,
+  "ghostscript_parse_exit": 0,
+  "javascript": false,
+  "likely_scanned": false,
+  "openable": true,
+  "page_size_points": [
+    612,
+    792
+  ],
+  "pages": 36,
+  "path": "paper/main.pdf",
+  "warnings": [],
+  "xfa_present": false
+}

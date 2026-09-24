@@ -1,0 +1,31 @@
+{
+  "bib_order_is_unique": true,
+  "bibtex_locator_count": 84,
+  "cited_reference_count": 84,
+  "errors": [],
+  "external_resource_row_count": 86,
+  "locator_kind_counts": {
+    "arxiv": 13,
+    "doi": 68,
+    "eprint": 2,
+    "institutional-or-scholarly-record": 1
+  },
+  "manuscript_citation_count": null,
+  "manuscript_source_compared": false,
+  "matrix_row_count": 84,
+  "minimum_reference_count": 55,
+  "network_resolution_performed": false,
+  "passed": true,
+  "printed_bbl_compared": false,
+  "printed_bibliography_count": null,
+  "publication_metadata_complete_count": 84,
+  "reference_count": 84,
+  "registry_row_count": 84,
+  "schema": "source-audit-v2",
+  "scope": "offline internal consistency and persistent-identifier-form audit; not independent content verification",
+  "verification_status_counts": {
+    "bibliographic_record_screened": 39,
+    "publisher_archive_or_institutional_record_checked": 45
+  },
+  "warnings": []
+}

@@ -1,0 +1,34 @@
+{
+  "abstract_words_detex_ascii": 232,
+  "build_diagnostics": {
+    "Citation `": 0,
+    "LaTeX Warning": 0,
+    "Overfull \\hbox": 0,
+    "Overfull \\vbox": 0,
+    "Underfull \\hbox": 0,
+    "Underfull \\vbox": 0,
+    "undefined references": 0
+  },
+  "citation_bibliography_equal": true,
+  "claim_rows": 41,
+  "duplicate_labels": [],
+  "external_resource_rows": 86,
+  "figures": 2,
+  "keyword_count": 8,
+  "literature_rows": 84,
+  "main_sections": 9,
+  "missing_cross_reference_labels": [],
+  "pages": 36,
+  "printed_bibliography_items": 84,
+  "registry_rows": 84,
+  "root_entries": [
+    "CURRENT-STATE.md",
+    "artifact",
+    "paper",
+    "research-plan.md"
+  ],
+  "subsections": 44,
+  "tables": 8,
+  "unique_labels": 89,
+  "unique_manuscript_citations": 84
+}

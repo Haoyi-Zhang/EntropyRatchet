@@ -1,0 +1,45 @@
+{
+  "commands": {
+    "finite-calculation": {
+      "elapsed_wall_clock": "0:02.00",
+      "exit_status": 0,
+      "maximum_resident_set_kib": 95788
+    },
+    "manuscript-build": {
+      "elapsed_wall_clock": "0:02.25",
+      "exit_status": 0,
+      "maximum_resident_set_kib": 58496
+    },
+    "manuscript-table-generation": {
+      "elapsed_wall_clock": "0:00.55",
+      "exit_status": 0,
+      "maximum_resident_set_kib": 92976
+    },
+    "project-source-audit": {
+      "elapsed_wall_clock": "0:00.63",
+      "exit_status": 0,
+      "maximum_resident_set_kib": 94632
+    },
+    "regression-tests": {
+      "elapsed_wall_clock": "0:01.76",
+      "exit_status": 0,
+      "maximum_resident_set_kib": 96044
+    },
+    "second-calculation": {
+      "elapsed_wall_clock": "0:01.44",
+      "exit_status": 0,
+      "maximum_resident_set_kib": 94516
+    },
+    "source-audit": {
+      "elapsed_wall_clock": "0:00.57",
+      "exit_status": 0,
+      "maximum_resident_set_kib": 94248
+    },
+    "table-generation": {
+      "elapsed_wall_clock": "0:00.53",
+      "exit_status": 0,
+      "maximum_resident_set_kib": 92972
+    }
+  },
+  "workers": 1
+}

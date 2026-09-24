@@ -1,0 +1,4 @@
+input_bits,entropy_bits,output_bits,flat_sources,affine_seeds,source_seed_pairs,maximum_distance,mean_distance,maximum_distance_squared,lhl_bound_squared
+3,2,1,70,16,1120,3/16,7/40,9/256,1/8
+4,2,1,1820,32,58240,3/16,19/104,9/256,1/8
+4,3,1,12870,32,411840,1/8,827/6864,1/64,1/16

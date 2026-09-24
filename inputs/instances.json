@@ -1,0 +1,221 @@
+{
+  "address_space_limit_mib": 3072,
+  "entropy_barrier_cases": [
+    {
+      "output_bits": 2,
+      "source_entropy_bits": 1
+    },
+    {
+      "output_bits": 4,
+      "source_entropy_bits": 2
+    },
+    {
+      "output_bits": 5,
+      "source_entropy_bits": 3
+    }
+  ],
+  "entropy_budget_cases": [
+    {
+      "fresh_entropy_bits": 6,
+      "observation_bits": 0,
+      "retained_bits": 4,
+      "session_bits": 2
+    },
+    {
+      "fresh_entropy_bits": 8,
+      "observation_bits": 2,
+      "retained_bits": 4,
+      "session_bits": 2
+    },
+    {
+      "fresh_entropy_bits": 10,
+      "observation_bits": 4,
+      "retained_bits": 4,
+      "session_bits": 2
+    }
+  ],
+  "extractor_cases": [
+    {
+      "entropy_bits": 2,
+      "input_bits": 3,
+      "output_bits": 1
+    },
+    {
+      "entropy_bits": 2,
+      "input_bits": 4,
+      "output_bits": 1
+    },
+    {
+      "entropy_bits": 3,
+      "input_bits": 4,
+      "output_bits": 1
+    }
+  ],
+  "future_update_bits": 2,
+  "future_update_steps": 2,
+  "mask_identity_bits_max": 6,
+  "prefix_bits_max": 10,
+  "public_framing_max_depth": 4,
+  "purpose": "Finite classical checks of explicitly defined toy games; not an implementation of a quantum-verification protocol.",
+  "randomness": "All specified finite inputs are enumerated; no random seed is used.",
+  "ratchet_loss_cases": [
+    {
+      "anchor_failure": "1/65536",
+      "extractor_errors": [
+        "1/32768",
+        "1/32768",
+        "1/32768",
+        "1/32768"
+      ],
+      "leakage_bits": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "soundness_errors": [
+        "1/65536",
+        "1/65536",
+        "1/65536",
+        "1/65536"
+      ]
+    },
+    {
+      "anchor_failure": "0/1",
+      "extractor_errors": [
+        "1/1024",
+        "1/2048",
+        "1/4096"
+      ],
+      "leakage_bits": [
+        0,
+        1,
+        2
+      ],
+      "soundness_errors": [
+        "1/16384",
+        "1/16384",
+        "1/16384"
+      ]
+    }
+  ],
+  "reduction_loss_cases": [
+    {
+      "epsilon": "1/256",
+      "freshness_failure": "0/1",
+      "leakage_bits": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "epsilon": "1/1024",
+      "freshness_failure": "1/4096",
+      "leakage_bits": [
+        2,
+        2,
+        2,
+        2
+      ]
+    }
+  ],
+  "rollback_bits": 4,
+  "sequential_cases": [
+    {
+      "bits": 3,
+      "leakage_bits": 1,
+      "sessions": 2
+    },
+    {
+      "bits": 4,
+      "leakage_bits": 1,
+      "sessions": 4
+    },
+    {
+      "bits": 4,
+      "leakage_bits": 2,
+      "sessions": 2
+    },
+    {
+      "bits": 5,
+      "leakage_bits": 1,
+      "sessions": 3
+    }
+  ],
+  "share_cases": [
+    {
+      "bits": 1,
+      "epochs": 1
+    },
+    {
+      "bits": 1,
+      "epochs": 2
+    },
+    {
+      "bits": 1,
+      "epochs": 3
+    },
+    {
+      "bits": 2,
+      "epochs": 1
+    },
+    {
+      "bits": 2,
+      "epochs": 2
+    },
+    {
+      "bits": 3,
+      "epochs": 2
+    }
+  ],
+  "time_limit_seconds": 120,
+  "tree_cases": [
+    {
+      "bits": 1,
+      "depth": 0
+    },
+    {
+      "bits": 1,
+      "depth": 1
+    },
+    {
+      "bits": 1,
+      "depth": 2
+    },
+    {
+      "bits": 2,
+      "depth": 0
+    },
+    {
+      "bits": 2,
+      "depth": 1
+    },
+    {
+      "bits": 2,
+      "depth": 2
+    },
+    {
+      "bits": 3,
+      "depth": 0
+    },
+    {
+      "bits": 3,
+      "depth": 1
+    }
+  ],
+  "workers": 1,
+  "xor_ratchet_cases": [
+    {
+      "retained_bits": 2,
+      "session_bits": 2,
+      "session_ids": 3
+    },
+    {
+      "retained_bits": 3,
+      "session_bits": 2,
+      "session_ids": 4
+    }
+  ]
+}

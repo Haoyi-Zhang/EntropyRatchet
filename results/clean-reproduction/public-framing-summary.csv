@@ -1,0 +1,2 @@
+max_depth,public_tree_shapes,terminal_transcript_paths,leaf_uniform_probability_checks,leaf_uniform_failures,strict_improvement_trees,equal_factor_trees,maximum_local_uniform_factor,maximum_leaf_uniform_factor,maximum_local_over_leaf_ratio
+4,677,6813,6813,0,672,5,16,16,16/5

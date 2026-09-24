@@ -1,0 +1,1059 @@
+{
+  "entropy_ratchet": {
+    "entropy_barriers": [
+      {
+        "distance_lower_bound": "1/2",
+        "maximum_output_support": 2,
+        "output_bits": 2,
+        "source_entropy_bits": 1,
+        "uniform_domain_size": 4
+      },
+      {
+        "distance_lower_bound": "3/4",
+        "maximum_output_support": 4,
+        "output_bits": 4,
+        "source_entropy_bits": 2,
+        "uniform_domain_size": 16
+      },
+      {
+        "distance_lower_bound": "3/4",
+        "maximum_output_support": 8,
+        "output_bits": 5,
+        "source_entropy_bits": 3,
+        "uniform_domain_size": 32
+      }
+    ],
+    "entropy_budgets": [
+      {
+        "distance_bound": "1/8",
+        "distance_bound_squared": "1/64",
+        "entropy_slack": 4,
+        "extractor_input_min_entropy": 10,
+        "extractor_output_bits": 6,
+        "fresh_entropy_bits": 6,
+        "observation_bits": 0,
+        "observation_support": 1,
+        "required_fresh_entropy_at_this_slack": 6,
+        "retained_bits": 4,
+        "session_bits": 2
+      },
+      {
+        "distance_bound": "1/8",
+        "distance_bound_squared": "1/64",
+        "entropy_slack": 4,
+        "extractor_input_min_entropy": 10,
+        "extractor_output_bits": 6,
+        "fresh_entropy_bits": 8,
+        "observation_bits": 2,
+        "observation_support": 4,
+        "required_fresh_entropy_at_this_slack": 8,
+        "retained_bits": 4,
+        "session_bits": 2
+      },
+      {
+        "distance_bound": "1/8",
+        "distance_bound_squared": "1/64",
+        "entropy_slack": 4,
+        "extractor_input_min_entropy": 10,
+        "extractor_output_bits": 6,
+        "fresh_entropy_bits": 10,
+        "observation_bits": 4,
+        "observation_support": 16,
+        "required_fresh_entropy_at_this_slack": 10,
+        "retained_bits": 4,
+        "session_bits": 2
+      }
+    ],
+    "extractor": [
+      {
+        "affine_seeds": 16,
+        "entropy_bits": 2,
+        "flat_sources": 70,
+        "input_bits": 3,
+        "lhl_bound_squared": "1/8",
+        "maximum_distance": "3/16",
+        "maximum_distance_squared": "9/256",
+        "mean_distance": "7/40",
+        "output_bits": 1,
+        "source_seed_pairs": 1120,
+        "witness_support": [
+          0,
+          1,
+          2,
+          4
+        ]
+      },
+      {
+        "affine_seeds": 32,
+        "entropy_bits": 2,
+        "flat_sources": 1820,
+        "input_bits": 4,
+        "lhl_bound_squared": "1/8",
+        "maximum_distance": "3/16",
+        "maximum_distance_squared": "9/256",
+        "mean_distance": "19/104",
+        "output_bits": 1,
+        "source_seed_pairs": 58240,
+        "witness_support": [
+          0,
+          1,
+          2,
+          4
+        ]
+      },
+      {
+        "affine_seeds": 32,
+        "entropy_bits": 3,
+        "flat_sources": 12870,
+        "input_bits": 4,
+        "lhl_bound_squared": "1/16",
+        "maximum_distance": "1/8",
+        "maximum_distance_squared": "1/64",
+        "mean_distance": "827/6864",
+        "output_bits": 1,
+        "source_seed_pairs": 411840,
+        "witness_support": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          10
+        ]
+      }
+    ],
+    "lifetime_bounds": [
+      {
+        "anchor_failure": "1/65536",
+        "extractor_errors": [
+          "1/32768",
+          "1/32768",
+          "1/32768",
+          "1/32768"
+        ],
+        "leakage_bits": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "leakage_soundness_terms": [
+          "1/16384",
+          "1/16384",
+          "1/16384",
+          "1/16384"
+        ],
+        "per_session_terms": [
+          "3/32768",
+          "3/32768",
+          "3/32768",
+          "3/32768"
+        ],
+        "soundness_errors": [
+          "1/65536",
+          "1/65536",
+          "1/65536",
+          "1/65536"
+        ],
+        "total_upper_bound": "25/65536"
+      },
+      {
+        "anchor_failure": "0/1",
+        "extractor_errors": [
+          "1/1024",
+          "1/2048",
+          "1/4096"
+        ],
+        "leakage_bits": [
+          0,
+          1,
+          2
+        ],
+        "leakage_soundness_terms": [
+          "1/16384",
+          "1/8192",
+          "1/4096"
+        ],
+        "per_session_terms": [
+          "17/16384",
+          "5/8192",
+          "1/2048"
+        ],
+        "soundness_errors": [
+          "1/16384",
+          "1/16384",
+          "1/16384"
+        ],
+        "total_upper_bound": "35/16384"
+      }
+    ],
+    "xor_refresh": [
+      {
+        "conditional_distance": "0/1",
+        "enumerated_points": 192,
+        "old_state_fully_exposed": true,
+        "old_states": 4,
+        "outputs_per_condition": 16,
+        "retained_bits": 2,
+        "session_bits": 2,
+        "session_ids": 3
+      },
+      {
+        "conditional_distance": "0/1",
+        "enumerated_points": 1024,
+        "old_state_fully_exposed": true,
+        "old_states": 8,
+        "outputs_per_condition": 32,
+        "retained_bits": 3,
+        "session_bits": 2,
+        "session_ids": 4
+      }
+    ]
+  },
+  "fresh_rekey": {
+    "independent_new_secret_success": "1/4",
+    "joint_points": 16,
+    "new_bits": 2,
+    "old_bits": 2,
+    "old_secret_fully_exposed": true
+  },
+  "future_target": {
+    "bits": 2,
+    "future_updates_known_before_first_leakage": true,
+    "maps_per_step": 256,
+    "reconstructed_paths": 262144,
+    "state_paths": 262144,
+    "steps": 2,
+    "success": "1/1",
+    "target_differs_from_initial_paths": 196608,
+    "update_sequences": 65536
+  },
+  "mask_identity_checks": 5460,
+  "negative_controls": [
+    {
+      "actual": "1/1",
+      "detected": true,
+      "explanation": "Two one-bit queries about the same two-bit secret reveal it; a one-bit per-lifetime calculation is invalid.",
+      "false_upper_bound": "1/2",
+      "name": "reset_budget_after_representation_refresh"
+    },
+    {
+      "actual": "1/1",
+      "detected": true,
+      "explanation": "Left and right shares from the same restored encoding reconstruct the secret.",
+      "false_upper_bound": "1/4",
+      "name": "restored_mask_is_not_fresh"
+    },
+    {
+      "actual": "1/1",
+      "detected": true,
+      "explanation": "A whole-state leakage circuit can combine both shares.",
+      "false_upper_bound": "1/4",
+      "name": "whole_state_query_is_not_one_share_query"
+    },
+    {
+      "actual": "3/4",
+      "detected": true,
+      "explanation": "Empty, zero and one are three framed symbols; payload-length accounting misses termination information.",
+      "false_upper_bound": "1/2",
+      "name": "secret_dependent_length_is_free"
+    },
+    {
+      "actual": "1/2",
+      "detected": true,
+      "explanation": "A hidden fair bit has prediction advantage zero before leakage and one half after the bit itself is leaked.",
+      "false_upper_bound": "0/1",
+      "name": "multiply_distinguishing_advantage"
+    },
+    {
+      "actual": "1/1",
+      "detected": true,
+      "explanation": "A true-session transcript can disclose a two-bit verifier secret; the next false session succeeds, despite standalone error one quarter.",
+      "false_upper_bound": "1/2",
+      "name": "one_shot_soundness_implies_reuse"
+    },
+    {
+      "actual": "1/1",
+      "detected": true,
+      "explanation": "Appending a public domain tag to a known secret does not make the secret unpredictable.",
+      "false_upper_bound": "1/4",
+      "name": "public_tags_restore_secret_entropy"
+    },
+    {
+      "actual": "1/1",
+      "detected": true,
+      "explanation": "Each fixed secret produces a singleton transcript, but the public range has four values; per-state support one is not a public causal guessing factor.",
+      "false_upper_bound": "1/4",
+      "name": "per_state_support_is_not_public_guessability"
+    }
+  ],
+  "prefix": [
+    {
+      "bits": 1,
+      "guess_success": "1/2",
+      "queries": 0
+    },
+    {
+      "bits": 1,
+      "guess_success": "1/1",
+      "queries": 1
+    },
+    {
+      "bits": 1,
+      "guess_success": "1/1",
+      "queries": 2
+    },
+    {
+      "bits": 1,
+      "guess_success": "1/1",
+      "queries": 3
+    },
+    {
+      "bits": 2,
+      "guess_success": "1/4",
+      "queries": 0
+    },
+    {
+      "bits": 2,
+      "guess_success": "1/2",
+      "queries": 1
+    },
+    {
+      "bits": 2,
+      "guess_success": "1/1",
+      "queries": 2
+    },
+    {
+      "bits": 2,
+      "guess_success": "1/1",
+      "queries": 3
+    },
+    {
+      "bits": 2,
+      "guess_success": "1/1",
+      "queries": 4
+    },
+    {
+      "bits": 3,
+      "guess_success": "1/8",
+      "queries": 0
+    },
+    {
+      "bits": 3,
+      "guess_success": "1/4",
+      "queries": 1
+    },
+    {
+      "bits": 3,
+      "guess_success": "1/2",
+      "queries": 2
+    },
+    {
+      "bits": 3,
+      "guess_success": "1/1",
+      "queries": 3
+    },
+    {
+      "bits": 3,
+      "guess_success": "1/1",
+      "queries": 4
+    },
+    {
+      "bits": 3,
+      "guess_success": "1/1",
+      "queries": 5
+    },
+    {
+      "bits": 4,
+      "guess_success": "1/16",
+      "queries": 0
+    },
+    {
+      "bits": 4,
+      "guess_success": "1/8",
+      "queries": 1
+    },
+    {
+      "bits": 4,
+      "guess_success": "1/4",
+      "queries": 2
+    },
+    {
+      "bits": 4,
+      "guess_success": "1/2",
+      "queries": 3
+    },
+    {
+      "bits": 4,
+      "guess_success": "1/1",
+      "queries": 4
+    },
+    {
+      "bits": 4,
+      "guess_success": "1/1",
+      "queries": 5
+    },
+    {
+      "bits": 4,
+      "guess_success": "1/1",
+      "queries": 6
+    },
+    {
+      "bits": 5,
+      "guess_success": "1/32",
+      "queries": 0
+    },
+    {
+      "bits": 5,
+      "guess_success": "1/16",
+      "queries": 1
+    },
+    {
+      "bits": 5,
+      "guess_success": "1/8",
+      "queries": 2
+    },
+    {
+      "bits": 5,
+      "guess_success": "1/4",
+      "queries": 3
+    },
+    {
+      "bits": 5,
+      "guess_success": "1/2",
+      "queries": 4
+    },
+    {
+      "bits": 5,
+      "guess_success": "1/1",
+      "queries": 5
+    },
+    {
+      "bits": 5,
+      "guess_success": "1/1",
+      "queries": 6
+    },
+    {
+      "bits": 5,
+      "guess_success": "1/1",
+      "queries": 7
+    },
+    {
+      "bits": 6,
+      "guess_success": "1/64",
+      "queries": 0
+    },
+    {
+      "bits": 6,
+      "guess_success": "1/32",
+      "queries": 1
+    },
+    {
+      "bits": 6,
+      "guess_success": "1/16",
+      "queries": 2
+    },
+    {
+      "bits": 6,
+      "guess_success": "1/8",
+      "queries": 3
+    },
+    {
+      "bits": 6,
+      "guess_success": "1/4",
+      "queries": 4
+    },
+    {
+      "bits": 6,
+      "guess_success": "1/2",
+      "queries": 5
+    },
+    {
+      "bits": 6,
+      "guess_success": "1/1",
+      "queries": 6
+    },
+    {
+      "bits": 6,
+      "guess_success": "1/1",
+      "queries": 7
+    },
+    {
+      "bits": 6,
+      "guess_success": "1/1",
+      "queries": 8
+    },
+    {
+      "bits": 7,
+      "guess_success": "1/128",
+      "queries": 0
+    },
+    {
+      "bits": 7,
+      "guess_success": "1/64",
+      "queries": 1
+    },
+    {
+      "bits": 7,
+      "guess_success": "1/32",
+      "queries": 2
+    },
+    {
+      "bits": 7,
+      "guess_success": "1/16",
+      "queries": 3
+    },
+    {
+      "bits": 7,
+      "guess_success": "1/8",
+      "queries": 4
+    },
+    {
+      "bits": 7,
+      "guess_success": "1/4",
+      "queries": 5
+    },
+    {
+      "bits": 7,
+      "guess_success": "1/2",
+      "queries": 6
+    },
+    {
+      "bits": 7,
+      "guess_success": "1/1",
+      "queries": 7
+    },
+    {
+      "bits": 7,
+      "guess_success": "1/1",
+      "queries": 8
+    },
+    {
+      "bits": 7,
+      "guess_success": "1/1",
+      "queries": 9
+    },
+    {
+      "bits": 8,
+      "guess_success": "1/256",
+      "queries": 0
+    },
+    {
+      "bits": 8,
+      "guess_success": "1/128",
+      "queries": 1
+    },
+    {
+      "bits": 8,
+      "guess_success": "1/64",
+      "queries": 2
+    },
+    {
+      "bits": 8,
+      "guess_success": "1/32",
+      "queries": 3
+    },
+    {
+      "bits": 8,
+      "guess_success": "1/16",
+      "queries": 4
+    },
+    {
+      "bits": 8,
+      "guess_success": "1/8",
+      "queries": 5
+    },
+    {
+      "bits": 8,
+      "guess_success": "1/4",
+      "queries": 6
+    },
+    {
+      "bits": 8,
+      "guess_success": "1/2",
+      "queries": 7
+    },
+    {
+      "bits": 8,
+      "guess_success": "1/1",
+      "queries": 8
+    },
+    {
+      "bits": 8,
+      "guess_success": "1/1",
+      "queries": 9
+    },
+    {
+      "bits": 8,
+      "guess_success": "1/1",
+      "queries": 10
+    },
+    {
+      "bits": 9,
+      "guess_success": "1/512",
+      "queries": 0
+    },
+    {
+      "bits": 9,
+      "guess_success": "1/256",
+      "queries": 1
+    },
+    {
+      "bits": 9,
+      "guess_success": "1/128",
+      "queries": 2
+    },
+    {
+      "bits": 9,
+      "guess_success": "1/64",
+      "queries": 3
+    },
+    {
+      "bits": 9,
+      "guess_success": "1/32",
+      "queries": 4
+    },
+    {
+      "bits": 9,
+      "guess_success": "1/16",
+      "queries": 5
+    },
+    {
+      "bits": 9,
+      "guess_success": "1/8",
+      "queries": 6
+    },
+    {
+      "bits": 9,
+      "guess_success": "1/4",
+      "queries": 7
+    },
+    {
+      "bits": 9,
+      "guess_success": "1/2",
+      "queries": 8
+    },
+    {
+      "bits": 9,
+      "guess_success": "1/1",
+      "queries": 9
+    },
+    {
+      "bits": 9,
+      "guess_success": "1/1",
+      "queries": 10
+    },
+    {
+      "bits": 9,
+      "guess_success": "1/1",
+      "queries": 11
+    },
+    {
+      "bits": 10,
+      "guess_success": "1/1024",
+      "queries": 0
+    },
+    {
+      "bits": 10,
+      "guess_success": "1/512",
+      "queries": 1
+    },
+    {
+      "bits": 10,
+      "guess_success": "1/256",
+      "queries": 2
+    },
+    {
+      "bits": 10,
+      "guess_success": "1/128",
+      "queries": 3
+    },
+    {
+      "bits": 10,
+      "guess_success": "1/64",
+      "queries": 4
+    },
+    {
+      "bits": 10,
+      "guess_success": "1/32",
+      "queries": 5
+    },
+    {
+      "bits": 10,
+      "guess_success": "1/16",
+      "queries": 6
+    },
+    {
+      "bits": 10,
+      "guess_success": "1/8",
+      "queries": 7
+    },
+    {
+      "bits": 10,
+      "guess_success": "1/4",
+      "queries": 8
+    },
+    {
+      "bits": 10,
+      "guess_success": "1/2",
+      "queries": 9
+    },
+    {
+      "bits": 10,
+      "guess_success": "1/1",
+      "queries": 10
+    },
+    {
+      "bits": 10,
+      "guess_success": "1/1",
+      "queries": 11
+    },
+    {
+      "bits": 10,
+      "guess_success": "1/1",
+      "queries": 12
+    }
+  ],
+  "public_framing": {
+    "equal_factor_trees": 5,
+    "leaf_uniform_failures": 0,
+    "leaf_uniform_probability_checks": 6813,
+    "max_depth": 4,
+    "maximum_leaf_uniform_factor": 16,
+    "maximum_local_over_leaf_ratio": "16/5",
+    "maximum_local_uniform_factor": 16,
+    "public_tree_shapes": 677,
+    "strict_improvement_trees": 672,
+    "terminal_transcript_paths": 6813
+  },
+  "ratchet_negative_controls": [
+    {
+      "actual": "1/2",
+      "detected": true,
+      "explanation": "A one-bit flat source mapped to two output bits misses at least half of the uniform domain for every public seed.",
+      "false_upper_bound": "0/1",
+      "name": "extract_more_uniform_bits_than_entropy"
+    },
+    {
+      "actual": "1/1",
+      "detected": true,
+      "explanation": "If a two-bit future source is already present when the snapshot is exposed, the restored execution reveals the future target exactly.",
+      "false_upper_bound": "1/4",
+      "name": "preloaded_randomness_is_post_exposure_fresh"
+    },
+    {
+      "actual": "1/1",
+      "detected": true,
+      "explanation": "Restoring a fully exposed two-bit retained state makes the next deterministic state known unless restoration is detected or new entropy is injected.",
+      "false_upper_bound": "1/4",
+      "name": "rollback_without_monotone_anchor"
+    },
+    {
+      "actual": "1/1",
+      "detected": true,
+      "explanation": "A public label that is not included in the accepted relation does not prevent a transcript valid in one mode from being replayed in another.",
+      "false_upper_bound": "1/2",
+      "name": "unchecked_domain_tag_blocks_replay"
+    }
+  ],
+  "reduction_loss": [
+    {
+      "epsilon": "1/256",
+      "freshness_failure": "0/1",
+      "leakage_bits": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "per_session_terms": [
+        "1/256",
+        "1/128",
+        "1/64",
+        "1/32"
+      ],
+      "total_upper_bound": "15/256"
+    },
+    {
+      "epsilon": "1/1024",
+      "freshness_failure": "1/4096",
+      "leakage_bits": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "per_session_terms": [
+        "1/256",
+        "1/256",
+        "1/256",
+        "1/256"
+      ],
+      "total_upper_bound": "65/4096"
+    }
+  ],
+  "rollback": {
+    "bits": 4,
+    "fresh_points": 256,
+    "fresh_regeneration_success": "1/16",
+    "old_target_fully_exposed": true,
+    "restored_points": 16,
+    "restored_target_success": "1/1"
+  },
+  "scope": "finite classical checks, not general proof or quantum soundness evidence",
+  "sequential_semantic_freshness": [
+    {
+      "bits": 3,
+      "fresh_target_tuples": 64,
+      "fresh_targets_lifetime_success": "7/16",
+      "leakage_bits_per_session": 1,
+      "persistent_target_success": "1/2",
+      "persistent_targets": 8,
+      "sessions": 2,
+      "single_session_success": "1/4",
+      "union_bound": "1/2"
+    },
+    {
+      "bits": 4,
+      "fresh_target_tuples": 65536,
+      "fresh_targets_lifetime_success": "1695/4096",
+      "leakage_bits_per_session": 1,
+      "persistent_target_success": "1/1",
+      "persistent_targets": 16,
+      "sessions": 4,
+      "single_session_success": "1/8",
+      "union_bound": "1/2"
+    },
+    {
+      "bits": 4,
+      "fresh_target_tuples": 256,
+      "fresh_targets_lifetime_success": "7/16",
+      "leakage_bits_per_session": 2,
+      "persistent_target_success": "1/1",
+      "persistent_targets": 16,
+      "sessions": 2,
+      "single_session_success": "1/4",
+      "union_bound": "1/2"
+    },
+    {
+      "bits": 5,
+      "fresh_target_tuples": 32768,
+      "fresh_targets_lifetime_success": "721/4096",
+      "leakage_bits_per_session": 1,
+      "persistent_target_success": "1/4",
+      "persistent_targets": 32,
+      "sessions": 3,
+      "single_session_success": "1/16",
+      "union_bound": "3/16"
+    }
+  ],
+  "shares": [
+    {
+      "bits": 1,
+      "epochs": 1,
+      "fresh_masks": true,
+      "independent_policies": 2,
+      "max_guess_success": "1/2",
+      "points_per_policy": 4,
+      "policies": 2
+    },
+    {
+      "bits": 1,
+      "epochs": 1,
+      "fresh_masks": false,
+      "independent_policies": 2,
+      "max_guess_success": "1/2",
+      "points_per_policy": 4,
+      "policies": 2
+    },
+    {
+      "bits": 1,
+      "epochs": 2,
+      "fresh_masks": true,
+      "independent_policies": 8,
+      "max_guess_success": "1/2",
+      "points_per_policy": 8,
+      "policies": 8
+    },
+    {
+      "bits": 1,
+      "epochs": 2,
+      "fresh_masks": false,
+      "independent_policies": 2,
+      "max_guess_success": "1/1",
+      "points_per_policy": 4,
+      "policies": 8
+    },
+    {
+      "bits": 1,
+      "epochs": 3,
+      "fresh_masks": true,
+      "independent_policies": 128,
+      "max_guess_success": "1/2",
+      "points_per_policy": 16,
+      "policies": 128
+    },
+    {
+      "bits": 1,
+      "epochs": 3,
+      "fresh_masks": false,
+      "independent_policies": 8,
+      "max_guess_success": "1/1",
+      "points_per_policy": 4,
+      "policies": 128
+    },
+    {
+      "bits": 2,
+      "epochs": 1,
+      "fresh_masks": true,
+      "independent_policies": 2,
+      "max_guess_success": "1/4",
+      "points_per_policy": 16,
+      "policies": 2
+    },
+    {
+      "bits": 2,
+      "epochs": 1,
+      "fresh_masks": false,
+      "independent_policies": 2,
+      "max_guess_success": "1/4",
+      "points_per_policy": 16,
+      "policies": 2
+    },
+    {
+      "bits": 2,
+      "epochs": 2,
+      "fresh_masks": true,
+      "independent_policies": 32,
+      "max_guess_success": "1/4",
+      "points_per_policy": 64,
+      "policies": 32
+    },
+    {
+      "bits": 2,
+      "epochs": 2,
+      "fresh_masks": false,
+      "independent_policies": 2,
+      "max_guess_success": "1/1",
+      "points_per_policy": 16,
+      "policies": 32
+    },
+    {
+      "bits": 3,
+      "epochs": 2,
+      "fresh_masks": true,
+      "independent_policies": 512,
+      "max_guess_success": "1/8",
+      "points_per_policy": 512,
+      "policies": 512
+    },
+    {
+      "bits": 3,
+      "epochs": 2,
+      "fresh_masks": false,
+      "independent_policies": 2,
+      "max_guess_success": "1/1",
+      "points_per_policy": 64,
+      "policies": 512
+    }
+  ],
+  "trees": [
+    {
+      "bits": 1,
+      "depth": 0,
+      "guessed_response_success": "1/2",
+      "histogram": {
+        "1/2": 1
+      },
+      "max_ratio": "1/1",
+      "max_real_success": "1/2",
+      "trees": 1
+    },
+    {
+      "bits": 1,
+      "depth": 1,
+      "guessed_response_success": "1/2",
+      "histogram": {
+        "1/1": 2,
+        "1/2": 2
+      },
+      "max_ratio": "2/1",
+      "max_real_success": "1/1",
+      "trees": 4
+    },
+    {
+      "bits": 1,
+      "depth": 2,
+      "guessed_response_success": "1/2",
+      "histogram": {
+        "1/1": 48,
+        "1/2": 16
+      },
+      "max_ratio": "2/1",
+      "max_real_success": "1/1",
+      "trees": 64
+    },
+    {
+      "bits": 2,
+      "depth": 0,
+      "guessed_response_success": "1/4",
+      "histogram": {
+        "1/4": 1
+      },
+      "max_ratio": "1/1",
+      "max_real_success": "1/4",
+      "trees": 1
+    },
+    {
+      "bits": 2,
+      "depth": 1,
+      "guessed_response_success": "1/4",
+      "histogram": {
+        "1/2": 14,
+        "1/4": 2
+      },
+      "max_ratio": "2/1",
+      "max_real_success": "1/2",
+      "trees": 16
+    },
+    {
+      "bits": 2,
+      "depth": 2,
+      "guessed_response_success": "1/4",
+      "histogram": {
+        "1/1": 384,
+        "1/2": 1344,
+        "1/4": 64,
+        "3/4": 2304
+      },
+      "max_ratio": "4/1",
+      "max_real_success": "1/1",
+      "trees": 4096
+    },
+    {
+      "bits": 3,
+      "depth": 0,
+      "guessed_response_success": "1/8",
+      "histogram": {
+        "1/8": 1
+      },
+      "max_ratio": "1/1",
+      "max_real_success": "1/8",
+      "trees": 1
+    },
+    {
+      "bits": 3,
+      "depth": 1,
+      "guessed_response_success": "1/8",
+      "histogram": {
+        "1/4": 254,
+        "1/8": 2
+      },
+      "max_ratio": "2/1",
+      "max_real_success": "1/4",
+      "trees": 256
+    }
+  ]
+}

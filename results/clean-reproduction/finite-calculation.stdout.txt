@@ -1,0 +1,1 @@
+{"address_space_limit_mib": 3072, "cpu_limit_seconds": 120, "cpu_seconds": 1.4283945999999998, "output": "results/recomputed", "peak_rss_kib": 95788, "random_seed": null, "randomness": "none: complete enumeration of the frozen domains", "status": "finite checks passed", "wall_seconds": 1.4291222479996577, "workers": 1}

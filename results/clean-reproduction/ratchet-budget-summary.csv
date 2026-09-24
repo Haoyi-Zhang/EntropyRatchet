@@ -1,0 +1,4 @@
+retained_bits,session_bits,observation_support,observation_bits,fresh_entropy_bits,extractor_input_min_entropy,extractor_output_bits,entropy_slack,distance_bound,required_fresh_entropy_at_this_slack
+4,2,1,0,6,10,6,4,1/8,6
+4,2,4,2,8,10,6,4,1/8,8
+4,2,16,4,10,10,6,4,1/8,10

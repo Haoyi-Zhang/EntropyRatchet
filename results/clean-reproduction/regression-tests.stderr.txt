@@ -1,0 +1,42 @@
+test_affine_flat_source_distance (test_finite_games.ModelTests.test_affine_flat_source_distance) ... ok
+test_controls_agree (test_finite_games.ModelTests.test_controls_agree) ... ok
+test_domain_guards (test_finite_games.ModelTests.test_domain_guards) ... ok
+test_duplicate_domain_rejected (test_finite_games.ModelTests.test_duplicate_domain_rejected) ... ok
+test_empty_mass_rejected (test_finite_games.ModelTests.test_empty_mass_rejected) ... ok
+test_entropy_budget_replaces_observation (test_finite_games.ModelTests.test_entropy_budget_replaces_observation) ... ok
+test_entropy_support_barrier (test_finite_games.ModelTests.test_entropy_support_barrier) ... ok
+test_exact_xor_ratchet (test_finite_games.ModelTests.test_exact_xor_ratchet) ... ok
+test_extractor_domain_guards (test_finite_games.ModelTests.test_extractor_domain_guards) ... ok
+test_fresh_and_restored_masks (test_finite_games.ModelTests.test_fresh_and_restored_masks) ... ok
+test_fresh_sequence_formula_and_enumeration (test_finite_games.ModelTests.test_fresh_sequence_formula_and_enumeration) ... ok
+test_full_observation (test_finite_games.ModelTests.test_full_observation) ... ok
+test_future_target (test_finite_games.ModelTests.test_future_target) ... ok
+test_invalid_mass_rejected (test_finite_games.ModelTests.test_invalid_mass_rejected) ... ok
+test_mutated_extractor_evidence_rejected (test_finite_games.ModelTests.test_mutated_extractor_evidence_rejected) ... ok
+test_mutated_histogram_rejected (test_finite_games.ModelTests.test_mutated_histogram_rejected) ... ok
+test_mutated_public_framing_rejected (test_finite_games.ModelTests.test_mutated_public_framing_rejected) ... ok
+test_no_observation (test_finite_games.ModelTests.test_no_observation) ... ok
+test_persistent_accumulation (test_finite_games.ModelTests.test_persistent_accumulation) ... ok
+test_public_framing_leaf_sampler (test_finite_games.ModelTests.test_public_framing_leaf_sampler) ... ok
+test_ratchet_controls_agree (test_finite_games.ModelTests.test_ratchet_controls_agree) ... ok
+test_ratchet_loss_arithmetic (test_finite_games.ModelTests.test_ratchet_loss_arithmetic) ... ok
+test_reduction_arithmetic (test_finite_games.ModelTests.test_reduction_arithmetic) ... ok
+test_rollback_semantic_freshness (test_finite_games.ModelTests.test_rollback_semantic_freshness) ... ok
+test_tree_address (test_finite_games.ModelTests.test_tree_address) ... ok
+test_tree_recurrence (test_finite_games.ModelTests.test_tree_recurrence) ... ok
+test_current_source_packet_passes (test_source_audit.SourceAuditTests.test_current_source_packet_passes) ... ok
+test_duplicate_bibtex_key_rejected (test_source_audit.SourceAuditTests.test_duplicate_bibtex_key_rejected) ... ok
+test_duplicate_primary_locator_rejected (test_source_audit.SourceAuditTests.test_duplicate_primary_locator_rejected) ... ok
+test_generic_dblp_search_rejected (test_source_audit.SourceAuditTests.test_generic_dblp_search_rejected) ... ok
+test_inproceedings_missing_pages_rejected (test_source_audit.SourceAuditTests.test_inproceedings_missing_pages_rejected) ... ok
+test_missing_external_locator_rejected (test_source_audit.SourceAuditTests.test_missing_external_locator_rejected) ... ok
+test_non_doi_bibtex_url_mismatch_rejected (test_source_audit.SourceAuditTests.test_non_doi_bibtex_url_mismatch_rejected) ... ok
+test_optional_manuscript_and_bbl_checks (test_source_audit.SourceAuditTests.test_optional_manuscript_and_bbl_checks) ... ok
+test_optional_manuscript_drift_rejected (test_source_audit.SourceAuditTests.test_optional_manuscript_drift_rejected) ... ok
+test_uncited_reference_rejected (test_source_audit.SourceAuditTests.test_uncited_reference_rejected) ... ok
+test_year_mismatch_rejected (test_source_audit.SourceAuditTests.test_year_mismatch_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 37 tests in 1.180s
+
+OK

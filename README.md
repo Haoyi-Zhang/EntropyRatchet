@@ -1,0 +1,146 @@
+# Reproducible artifact
+
+This standalone repository accompanies **Entropy-Ratcheted Soundness for
+Sequential Verification under State Exposure**.  It contains complete proof
+notes, frozen finite domains, two differently structured exact calculations,
+integrity and negative controls, 37 regression tests, an executable source audit,
+source ledgers, and LaTeX
+table generation.
+
+The main result is a generic compiler.  It derives a fresh retained state and a
+fresh complete base-verifier random tape from residual conditional entropy plus
+a source sampled after the relevant exposure.  It is not an implementation of
+Mahadev's protocol, an LWE experiment, a proof-assistant development, or an
+in-place update of one lattice trapdoor under one fixed public key.
+
+## Main theorem
+
+For nonoverlapping sessions, control failure probability `rho`, extractor losses
+`delta_j`, current classical-leakage causal factors `Gamma_j`, and matching
+prefix-robust base errors `epsilon_j`, the paper proves
+
+```text
+Pr[first false acceptance]
+  <= min(1, rho + sum_j delta_j + sum_j Gamma_j epsilon_j).
+```
+
+`Gamma_j` is not an after-the-fact support count.  It is the worst reciprocal
+path probability of an efficient public online response sampler.  Fixed public
+binary framing of at most `L_j` bits gives `Gamma_j <= 2^L_j`; a smaller
+per-secret support does not by itself justify a smaller factor.  Retained-state
+observation uses a separate joint-support parameter `J_j` in the next entropy
+ledger.
+
+The proof uses a control-safe coupling, predecessor-hybrid quantum conditional
+min-entropy, strong seeded extraction, fixed-mode prefix lifting or an explicit
+chosen-mode base theorem, causal leakage transport, and a first-bad-session
+partition.  Completed base-verifier states may be released only after their
+decisions are terminal.
+
+## Reproduce
+
+Requirements: Linux and Python 3.10 or later, standard library only.  Run from
+the extracted repository root:
+
+```sh
+python3 reproduce.py --output results/recomputed
+python3 verify.py results/recomputed/exact-results.json \
+  --output results/recomputed/second-calculation.json
+python3 -m unittest discover -s tests -v
+python3 render_tables.py \
+  --result results/recomputed/exact-results.json \
+  --output results/tables
+python3 audit_sources.py --output results/recomputed/source-audit.json
+```
+
+Do not use `python -O`; assertions are deliberate exact checks.  The principal
+drivers use one worker, a 120 CPU-second limit, and a 3,072 MiB address-space
+limit.  Runtime and peak-RSS observations vary by machine.  Counts,
+probabilities, CSV rows, and generated table bodies are deterministic.
+
+When the repository is inside the complete project and the paper has been built,
+the same audit can also compare the live manuscript and printed bibliography:
+
+```sh
+python3 artifact/audit_sources.py \
+  --base artifact \
+  --manuscript paper/main.tex \
+  --bbl paper/main.bbl \
+  --output results/recomputed/project-source-audit.json
+```
+
+`reproduce.py` enumerates the frozen cases directly.  `verify.py` does not
+import the principal finite-game implementation; it uses separate recurrences,
+probability-mass propagation, leaf-count identities, and explicit tuple
+calculations.  The two implementations were produced in one research process,
+so agreement is a second calculation, not independent peer review.
+
+## Evidence inventory
+
+- `proofs/entropy-ratchet-proof.md` — complete compiler and instantiation proof.
+- `proofs/model-and-proofs.md` — target, cq-support, causal-transport,
+  fresh-secret, split-state, and rollback lemmas.
+- `inputs/instances.json` and `inputs/README.md` — every finite domain and cap.
+- `results/expected/` — frozen exact scientific outputs.
+- `results/clean-reproduction/` — final clean commands, exits, measurements,
+  output comparisons, and PDF inspection record.
+- `claim_evidence_ledger.csv` — material claims mapped to proofs/checkers,
+  results, paper objects, maturity, and boundaries.
+- `literature-calibration.md` — 12 closest, 5 influential, and 5 adjacent
+  full-paper structural calibration.
+- `literature_matrix.csv` — all 84 cited references with reading depth, role,
+  cohort, and redistribution boundary.
+- `inputs/references.bib`, `inputs/manuscript-citations.txt`, and
+  `inputs/bibliography_registry.csv` — the frozen bibliography, citation-key set,
+  and one-row-per-reference registry used by the offline audit.
+- `audit_sources.py` — rejects key-set drift, duplicate identifiers, generic DBLP
+  searches, malformed persistent identifiers, non-DOI locator disagreement,
+  incomplete type-specific publication fields, metadata mismatches, and missing
+  external-resource coverage. It does not resolve the network or certify content.
+- `external_resources.csv` and `source-boundaries.md` — scholarly/official
+  source records and integration limits.
+
+## Frozen exact coverage
+
+| Family | Coverage |
+|---|---:|
+| Adaptive leakage trees | 4,439 |
+| Public response-tree shapes / terminal paths | 677 / 6,813 |
+| Trees where leaf sampling strictly improves local uniform guessing | 672 |
+| Adaptive share policies | 1,368 |
+| Prefix cases | 85 |
+| XOR identities | 5,460 |
+| Public update pairs / state paths | 65,536 / 262,144 |
+| Fresh-target tuples | 98,624 |
+| Flat sources / source-seed pairs | 14,760 / 471,200 |
+| Exact XOR-ratchet points | 1,216 |
+| Entropy budgets / barriers | 3 / 3 |
+| Lifetime-loss vectors | 2 |
+| Generic / ratchet negative controls | 8 / 4 |
+| Regression tests | 37, all passing |
+
+The public-tree domain enumerates every ordered pruned binary tree of depth at
+most four.  A direct path sampler and a separate recurrence agree that sampling
+children in proportion to terminal-descendant counts gives probability exactly
+`1/N(root)` to every leaf.  The maximum ratio between the generic local-uniform
+factor and the leaf-optimal factor is `16/5` in this frozen domain.
+
+The calculations corroborate finite classical identities and accounting.  They
+are not evidence of quantum computational soundness, LWE hardness, deployed
+erasure, hardware rollback resistance, performance, or scalability.
+
+## Scientific boundary
+
+The fresh-key Mahadev corollary regenerates the protocol key pair.  The
+unamplified base error is mainly an interface check; a second corollary invokes
+the published Chia--Chung--Yamakawa parallel-repetition theorem as the base
+protocol and obtains negligible lifetime error when all session counts and
+causal factors are polynomial and the remaining losses are negligible.  No
+independent-repetition theorem is invented here.
+
+Only classical read-only leakage with complete public framing is covered.
+Coherent leakage, overlapping sessions, malicious state modification, UC
+composition, physical-erasure guarantees, and fixed-public-key trapdoor
+evolution are excluded.  External papers are cited but not redistributed or
+relicensed.  No network, private cache, dataset, device, model API, or service is
+required for the exact artifact.

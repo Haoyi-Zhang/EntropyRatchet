@@ -1,0 +1,63 @@
+{
+  "all_commands_exit_zero": true,
+  "all_deterministic_files_match": true,
+  "deterministic_scientific_files": {
+    "exact-results.json": true,
+    "extractor-summary.csv": true,
+    "public-framing-summary.csv": true,
+    "ratchet-budget-summary.csv": true,
+    "second-calculation.json (scientific fields)": true,
+    "sequential-summary.csv": true,
+    "share-summary.csv": true,
+    "source-audit.json": true,
+    "tree-summary.csv": true
+  },
+  "generated_tables": {
+    "controls.tex": true,
+    "extractor.tex": true,
+    "ratchet-budget.tex": true,
+    "ratchet-controls.tex": true,
+    "semantic-freshness.tex": true,
+    "shares.tex": true,
+    "trees.tex": true
+  },
+  "runtime_fields_excluded_from_byte_comparison": [
+    "cpu_seconds",
+    "wall_seconds",
+    "peak_rss_kib"
+  ],
+  "structural_validation": {
+    "abstract_words_detex_ascii": 232,
+    "build_diagnostics": {
+      "Citation `": 0,
+      "LaTeX Warning": 0,
+      "Overfull \\hbox": 0,
+      "Overfull \\vbox": 0,
+      "Underfull \\hbox": 0,
+      "Underfull \\vbox": 0,
+      "undefined references": 0
+    },
+    "citation_bibliography_equal": true,
+    "claim_rows": 41,
+    "duplicate_labels": [],
+    "external_resource_rows": 86,
+    "figures": 2,
+    "keyword_count": 8,
+    "literature_rows": 84,
+    "main_sections": 9,
+    "missing_cross_reference_labels": [],
+    "pages": 36,
+    "printed_bibliography_items": 84,
+    "registry_rows": 84,
+    "root_entries": [
+      "CURRENT-STATE.md",
+      "artifact",
+      "paper",
+      "research-plan.md"
+    ],
+    "subsections": 44,
+    "tables": 8,
+    "unique_labels": 89,
+    "unique_manuscript_citations": 84
+  }
+}
