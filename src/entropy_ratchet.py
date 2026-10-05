@@ -216,7 +216,7 @@ def all_ratchet_cases(config: dict) -> dict:
 
 
 def ratchet_negative_controls() -> list[dict]:
-    """Exact witnesses against four over-strong ratchet inferences."""
+    """Analytic expected-value fixtures for four ratchet counterexamples."""
     rows = [
         {
             "name": "extract_more_uniform_bits_than_entropy",

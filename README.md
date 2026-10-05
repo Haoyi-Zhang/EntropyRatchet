@@ -144,7 +144,7 @@ This checks equation/ledger/proof-excerpt consistency, not the truth of a theore
 | Exact XOR-ratchet points | 1,216 |
 | Entropy budgets / barriers | 3 / 3 |
 | Lifetime-loss vectors | 2 |
-| Generic / ratchet negative controls | 8 / 4 |
+| Generic calculations / ratchet expected-value fixtures | 8 / 4 |
 | Matched lifetime cases | 8, including zero leakage and saturation |
 | Nonzero-smoothing cq witness | 1 (numerical diagnostic) |
 | Public-seed/retired-input recomputations | 2,048 |
@@ -167,6 +167,12 @@ first solver only; it is not a separately reproduced scientific claim.
 The XOR zero-loss case assumes joint independence from old C and complete B.
 The correlated case X=(U,C), Phi=(0,C) has distance 1/2. Recomputing retired
 inputs corroborates deterministic reconstruction, not a physical erasure control.
+
+The ratchet-specific control rows are analytic expected-value fixtures. Their
+separate comparison calculates the support-barrier row; the preloaded-source,
+rollback, and unchecked-tag rows compare stated example values rather than
+executing separate games. The dedicated rollback and XOR calculations remain
+separate finite computations.
 
 The calculations corroborate finite classical identities and accounting;
 the labelled cq case checks a small distance calculation only.  They

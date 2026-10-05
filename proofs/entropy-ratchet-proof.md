@@ -442,13 +442,14 @@ factorization above. With X a genuinely independent uniform two-bit source the
 same transformation has distance zero. Both controls are computed, not constants.
 
 
-The unit coefficients in (7) are componentwise sharp for the declared black-box
-class.  A system that falsely accepts exactly on `CtlFail` attains `rho`; a
-maximizing event changes by exactly a statistical distance `delta`; a uniform
+The control and leakage transport coefficients are black-box sharp.
+A system that falsely accepts exactly on `CtlFail` attains `rho`; a
+maximizing event changes by exactly the actual hybrid distance `d`; a uniform
 `m`-bit target with `L` revealed coordinates attains
 `Gamma*epsilon=2^L*2^{-m}`; and independent bad events satisfy
-`1-(1-p)^Q=Qp-O(Q^2p^2)`.  This is componentwise/first-order sharpness, not a
-claim that one construction simultaneously attains every term.
+`1-(1-p)^Q=Qp-O(Q^2p^2)`. The distance example establishes sharpness of generic
+transport, not attainability of the leftover-hash/smoothing estimate `delta_j`
+by an admissible extractor/source family. No simultaneous equality is claimed.
 
 ## 8. Necessity statements
 

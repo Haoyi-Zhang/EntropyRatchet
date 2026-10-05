@@ -193,7 +193,7 @@ def extractor_summary_second(input_bits: int, entropy_bits: int, output_bits: in
 
 
 def ratchet_controls_second() -> dict[str, tuple[str,str]]:
-    # Compute the four witnesses without importing the production path.
+    # Calculate the support barrier; compare analytic fixtures for other rows.
     output_domain = set(range(4))
     one_bit_image = {0,1}
     entropy_distance = Fraction(len(output_domain-one_bit_image), len(output_domain))
