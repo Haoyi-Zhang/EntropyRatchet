@@ -3,7 +3,7 @@
 This standalone repository accompanies **Entropy-Ratcheted Soundness for
 Sequential Verification under State Exposure**.  It contains complete proof
 notes, frozen finite domains, two differently structured exact calculations,
-integrity and negative controls, 37 regression tests, an executable source audit,
+integrity and negative controls, 57 regression tests, an executable source audit,
 source ledgers, and LaTeX
 table generation.
 
@@ -37,9 +37,27 @@ chosen-mode base theorem, causal leakage transport, and a first-bad-session
 partition.  Completed base-verifier states may be released only after their
 decisions are terminal.
 
+## Extractor distance contract
+
+Actual histories and quantum side information are normalized, including abort
+flags. Smoothing is over subnormalized states in a purified-distance ball.
+No witness is renormalized. The compiler compares the hashed output to uniform
+output tensor the **actual** side marginal. Its conservative error is
+
+```text
+delta_j = 2 eta_j + (1/2) sqrt(2^(m_j-k_j)).
+```
+
+`proofs/fixed-marginal-extraction.md` contains the same complete operator proof
+as the manuscript. The source theorem's optimized-side definition is not
+silently identified with this distance. `extractor_interface` records separate
+budget arithmetic, a classical distance-definition example, and a noncommuting
+cq witness with eta=1/4. These tests do not establish the general theorem.
+
 ## Reproduce
 
-Requirements: Linux and Python 3.10 or later, standard library only.  Run from
+Requirements: Linux and Python 3.10 or later, standard library only.
+The documented commands were checked on Linux with CPython 3.13.5.  Run from
 the extracted repository root:
 
 ```sh
@@ -55,8 +73,8 @@ python3 audit_sources.py --output results/recomputed/source-audit.json
 
 Do not use `python -O`; assertions are deliberate exact checks.  The principal
 drivers use one worker, a 120 CPU-second limit, and a 3,072 MiB address-space
-limit.  Runtime and peak-RSS observations vary by machine.  Counts,
-probabilities, CSV rows, and generated table bodies are deterministic.
+limit.  Runtime and peak-RSS observations vary by machine.  Counts, rational probabilities, CSV rows, and generated table bodies are deterministic.
+The one small cq spectral diagnostic uses binary64 at absolute tolerance 1e-12.
 
 When the repository is inside the complete project and the paper has been built,
 the same audit can also compare the live manuscript and printed bibliography:
@@ -75,8 +93,18 @@ probability-mass propagation, leaf-count identities, and explicit tuple
 calculations.  The two implementations were produced in one research process,
 so agreement is a second calculation, not independent peer review.
 
+In the complete project, the additional structural check is:
+
+```sh
+python3 artifact/audit_interface.py --manuscript paper/main.tex \
+  --output artifact/results/recomputed/interface-audit.json
+```
+
+This checks equation/ledger/proof-excerpt consistency, not the truth of a theorem.
+
 ## Evidence inventory
 
+- `proofs/fixed-marginal-extraction.md` — full fixed-marginal extraction proof.
 - `proofs/entropy-ratchet-proof.md` — complete compiler and instantiation proof.
 - `proofs/model-and-proofs.md` — target, cq-support, causal-transport,
   fresh-secret, split-state, and rollback lemmas.
@@ -111,13 +139,17 @@ so agreement is a second calculation, not independent peer review.
 | Prefix cases | 85 |
 | XOR identities | 5,460 |
 | Public update pairs / state paths | 65,536 / 262,144 |
-| Fresh-target tuples | 98,624 |
+| Fresh-target tuples | 99,404 |
 | Flat sources / source-seed pairs | 14,760 / 471,200 |
 | Exact XOR-ratchet points | 1,216 |
 | Entropy budgets / barriers | 3 / 3 |
 | Lifetime-loss vectors | 2 |
 | Generic / ratchet negative controls | 8 / 4 |
-| Regression tests | 37, all passing |
+| Matched lifetime cases | 8, including zero leakage and saturation |
+| Nonzero-smoothing cq witness | 1 (numerical diagnostic) |
+| Public-seed/retired-input recomputations | 2,048 |
+| Joint-independence XOR controls | 2 |
+| Regression tests | 57 (see clean-reproduction log) |
 
 The public-tree domain enumerates every ordered pruned binary tree of depth at
 most four.  A direct path sampler and a separate recurrence agree that sampling
@@ -125,7 +157,19 @@ children in proportion to terminal-descendant counts gives probability exactly
 `1/N(root)` to every leaf.  The maximum ratio between the generic local-uniform
 factor and the leaf-optimal factor is `16/5` in this frozen domain.
 
-The calculations corroborate finite classical identities and accounting.  They
+Both target modes permit one guess per session and public rejection feedback;
+`persistent_target_success` is any-session success. The separately named
+`persistent_final_only_no_feedback` is a different, one-final-guess baseline.
+Full coordinate-policy search and a separately implemented prefix recursion
+attain the counting optimum proved in P11. The policy-state count describes the
+first solver only; it is not a separately reproduced scientific claim.
+
+The XOR zero-loss case assumes joint independence from old C and complete B.
+The correlated case X=(U,C), Phi=(0,C) has distance 1/2. Recomputing retired
+inputs corroborates deterministic reconstruction, not a physical erasure control.
+
+The calculations corroborate finite classical identities and accounting;
+the labelled cq case checks a small distance calculation only.  They
 are not evidence of quantum computational soundness, LWE hardness, deployed
 erasure, hardware rollback resistance, performance, or scalability.
 

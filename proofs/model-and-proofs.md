@@ -478,21 +478,46 @@ a false claim exactly when the adversary outputs that target. With no leakage,
 success is 2^{-m}. Revealing L fixed target coordinates makes success
 2^{-(m-L)} until saturation, attaining the factor 2^L in P10.
 
-**Proposition P11 (fresh and persistent lifetime curves).** For Q independent
-m-bit targets and L revealed coordinates in each session, the exact probability
-of at least one correct full-target guess is
+**Proposition P11 (matched any-session events).** Let m>=1, 0<=L<=m,
+Q>=1. Each session allows at most L classical reads of target coordinates and
+one full-target guess. Every wrong guess produces public rejection. Success is
+at least one correct guess over all sessions. For independent uniform fresh
+targets the optimum is
 
-    1 - (1 - 2^{-(m-L)})^Q.
+    p_fresh = 1 - (1 - 2^{L-m})^Q.
 
-If one persistent m-bit target is used in all sessions and each session reveals
-L new coordinates, success is
+For one uniform persistent target the optimum is
 
-    2^{-max(m-QL,0)}.
+    p_persistent = min(1, 2^{-m} sum_{j=1}^Q 2^{jL}).
 
-**Proof.** In the independent case, each session fails with probability
-1-2^{-(m-L)} and the failures are independent. In the persistent case, after
-min(m,QL) distinct coordinates, exactly m-min(m,QL) uniform coordinates remain,
-so one guess succeeds with the reciprocal of the remaining support. QED.
+**Proof.** On a surviving session-j path all previous guesses were rejected.
+There are at most 2^{jL} binary-answer paths, and a full guess can newly win only
+one target on each. Sum over sessions and truncate at the 2^m possible targets.
+Randomization is a convex mixture, so it cannot improve this deterministic bound.
+
+For L=0, use distinct guesses. For L>0 and QL>=m, read all coordinates by the
+last session. For L>0 and QL<m, set a=2^L and read L successive coordinates per
+session, yielding a full a-ary tree through depth Q. Assign distinct target
+values to all guess nodes (depths 1..Q), upwards from depth Q. The subtree of a
+depth-j node has sum_{i=0}^{Q-j} a^i < 2 a^{Q-j} nodes, whereas it contains
+2^{m-jL} >= 2 a^{Q-j} target values. After descendants are assigned, an unused
+target remains for this node. Guess its assigned value. The guesses are globally
+distinct and all lie below their node, so their union attains sum_j 2^{jL} wins.
+In the fresh case each new target is uniform independently of prior rejection;
+its optimum is 2^{L-m}, giving the product failure formula. QED.
+
+The **final-only no-feedback experiment**, which forbids earlier guesses, is a
+different experiment: its persistent optimum is 2^{-max(m-QL,0)}. It is retained
+as an explicitly named baseline in JSON/CSV, not as the lifetime curve.
+
+**Bellman audit.** The exhaustive solver stores the remaining uniform candidate
+set S, known-coordinate mask K, sessions q, and current reads l. A coordinate
+read partitions S and sums the child optima; a guess x wins one candidate and
+continues on S minus {x}, q-1, and a reset read budget. Empty sets have value
+zero, and q>=|S| has value |S| using distinct guesses. Other values are maxima
+over all legal actions. Induction on (q,l) proves optimality. A separate solver
+restricts reads to a prefix schedule and optimizes guesses on tuple sets; its
+lower bound attains the proven upper bound. It imports no production solver.
 
 The ordinary union factor is asymptotically tight: for fixed Q and small
 single-session epsilon, 1-(1-epsilon)^Q=Q epsilon-O(Q^2 epsilon^2).
@@ -515,17 +540,9 @@ the corresponding witness.
 
 ## 10. Additional exact corroboration
 
-Four frozen fresh/persistent cases enumerate 98,624 independent target tuples
-in total. Their fresh lifetime probabilities are 7/16, 1695/4096, 7/16 and
-721/4096 for parameter triples (m,L,Q) equal to (3,1,2), (4,1,4), (4,2,2) and
-(5,1,3). The independently calculated persistent probabilities are 1/2, 1, 1
-and 1/4. The four-bit rollback domain gives 1/16 after genuine regeneration
-and 1 after restoration. Two rational loss-accounting cases give 15/256 and
-65/4096.
-
-One implementation enumerates target tuples or persistent targets. The second
-uses the closed forms in P11 and direct cardinality arithmetic for rollback and
-loss accounting. Sixteen regression tests cover the original finite games,
-these new cases, domain guards, mutation rejection and duplicate-domain
-rejection. As before, finite agreement corroborates only the frozen classical
-instances; P9--P12 carry the unbounded mathematical statements.
+Eight frozen cases enumerate 99,404 fresh-target tuples. Persistent any-session
+values include 3/4 at (m,L,Q)=(3,1,2) and 7/16 at (5,1,3). Boundary cases include
+L=0,Q=3; Q=1; full revelation; and saturation by repeated guesses alone. The
+separate four-bit rollback example gives 1/16 after regeneration and 1 after
+restoration. Numerical output and all tables are generated from these domains.
+Finite agreement checks implementation, not the unbounded proof of P11.

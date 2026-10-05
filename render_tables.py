@@ -10,7 +10,7 @@ from pathlib import Path
 def frac(s: str) -> str:
     f=Fraction(s)
     if f.denominator==1:return str(f.numerator)
-    return r'$\frac{'+str(f.numerator)+'}{'+str(f.denominator)+'}$'
+    return '$'+str(f.numerator)+'/'+str(f.denominator)+'$'
 
 
 def main() -> int:

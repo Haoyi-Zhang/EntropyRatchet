@@ -1,5 +1,22 @@
 {
   "address_space_limit_mib": 3072,
+  "contract_budget_cases": [
+    {
+      "min_entropy_bits": 6,
+      "output_bits": 2,
+      "smoothing": "0/1"
+    },
+    {
+      "min_entropy_bits": 6,
+      "output_bits": 2,
+      "smoothing": "1/64"
+    },
+    {
+      "min_entropy_bits": 9,
+      "output_bits": 1,
+      "smoothing": "1/128"
+    }
+  ],
   "entropy_barrier_cases": [
     {
       "output_bits": 2,
@@ -56,7 +73,7 @@
   "mask_identity_bits_max": 6,
   "prefix_bits_max": 10,
   "public_framing_max_depth": 4,
-  "purpose": "Finite classical checks of explicitly defined toy games; not an implementation of a quantum-verification protocol.",
+  "purpose": "Finite classical and small cq interface diagnostics; neither a proof of the smooth quantum lemma nor a verification-protocol implementation.",
   "randomness": "All specified finite inputs are enumerated; no random seed is used.",
   "ratchet_loss_cases": [
     {
@@ -142,6 +159,26 @@
       "bits": 5,
       "leakage_bits": 1,
       "sessions": 3
+    },
+    {
+      "bits": 3,
+      "leakage_bits": 0,
+      "sessions": 3
+    },
+    {
+      "bits": 3,
+      "leakage_bits": 1,
+      "sessions": 1
+    },
+    {
+      "bits": 2,
+      "leakage_bits": 2,
+      "sessions": 1
+    },
+    {
+      "bits": 2,
+      "leakage_bits": 0,
+      "sessions": 4
     }
   ],
   "share_cases": [

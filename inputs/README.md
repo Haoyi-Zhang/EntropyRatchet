@@ -25,7 +25,7 @@ state space and all initial states: 65,536 update pairs and 262,144 paths.  It
 checks predictability under known future updates, not one-wayness or
 computational hardness.
 
-Fresh/persistent lifetime cases enumerate 98,624 tuples.  Rollback compares
+Fresh/persistent lifetime cases enumerate 99,404 tuples.  Rollback compares
 fresh regeneration with restoration of a fully exposed four-bit target.
 Reduction-loss cases perform exact rational accounting for causal multipliers,
 session sums, and additive freshness distance.
@@ -55,10 +55,31 @@ bits.  Two lifetime vectors exercise
 `rho + sum delta_j + sum Gamma_j epsilon_j`.
 
 Four ratchet-specific controls detect extracting too many exact uniform bits,
-treating snapshot bytes as post-exposure fresh, reconstructing an erased source,
+treating snapshot bytes as post-exposure fresh, ignoring rollback without an anchor,
 and displaying a domain tag without checking it.  Eight generic controls include
 secret-dependent framing, isolated-to-sequential lifting, and the new error of
 using per-secret support as a public causal factor.
+
+## Fixed-marginal diagnostics
+
+`contract_budget_cases` contains three rational instances of the two-cost
+smoothing budget, one with eta=0 and two with eta>0. The general smooth quantum
+bound is proved in the paper, not inferred from these cases. A fixed two-block
+cq input (uniform V with conditional |0> and |+>) is scaled by 15/16 to a
+subnormalized witness, without renormalization. Inputs and chosen witness are
+explicit in code/results; 2x2 spectral norms are checked to 1e-12, not called
+exact rational or hardware evidence. The classical eight-cell diagnostic
+separates optimized and actual side marginals.
+
+Lifetime success is any-session guessing with public rejection in both modes.
+The standalone final-only formula is explicitly named. The full coordinate
+policy search and the prefix-policy recursion are compared on the frozen cases;
+tests also cover the complete 36-point grid 1<=m<=3, 0<=L<=m, 1<=Q<=4.
+
+The joint-independence XOR controls enumerate correlated and independent sources.
+The retired-input check enumerates 256 public affine seeds times eight complete
+inputs, with separately written output and recomputation operations. It is not
+physical-erasure or rollback-prevention evidence.
 
 ## Frozen bibliography inputs
 

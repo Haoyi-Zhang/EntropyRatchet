@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reproduce the frozen finite classical checks with one worker."""
+"""Reproduce finite classical checks and the labelled small cq diagnostic with one worker."""
 from __future__ import annotations
 import argparse
 import csv
@@ -11,6 +11,7 @@ from src.finite_games import (tree_case, public_framing_case, shares_case, prefi
                              mask_identity_count,negative_controls,fresh_rekey_case,future_target_case)
 from src.sequential_bounds import sequential_cases, rollback_case, reduction_loss_cases
 from src.entropy_ratchet import all_ratchet_cases, ratchet_negative_controls
+from src.extractor_contract import contract_checks
 
 
 def main() -> int:
@@ -29,7 +30,7 @@ def main() -> int:
                 'shares':[shares_case(1,3,True),shares_case(1,3,False)],
                 'negative_controls':negative_controls()}
     else:
-        result={'scope':'finite classical checks, not general proof or quantum soundness evidence',
+        result={'scope':'finite classical checks plus one labelled cq diagnostic; not a general proof or quantum soundness experiment',
           'trees':[tree_case(c['bits'],c['depth']) for c in cfg['tree_cases']],
           'public_framing':public_framing_case(cfg['public_framing_max_depth']),
           'shares':[shares_case(c['bits'],c['epochs'],fresh)
@@ -43,7 +44,8 @@ def main() -> int:
           'rollback':rollback_case(cfg['rollback_bits']),
           'reduction_loss':reduction_loss_cases(cfg['reduction_loss_cases']),
           'entropy_ratchet':all_ratchet_cases(cfg),
-          'ratchet_negative_controls':ratchet_negative_controls()}
+          'ratchet_negative_controls':ratchet_negative_controls(),
+          'extractor_interface':contract_checks(cfg['contract_budget_cases'])}
     wall=time.monotonic()-start_wall;cpu=time.process_time()-start_cpu
     stats={'workers':1,'wall_seconds':wall,'cpu_seconds':cpu,
       'peak_rss_kib':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
@@ -71,7 +73,8 @@ def main() -> int:
         with (args.output/'sequential-summary.csv').open('w',newline='') as f:
             names=['bits','leakage_bits_per_session','sessions','single_session_success',
                    'fresh_targets_lifetime_success','union_bound','persistent_target_success',
-                   'fresh_target_tuples','persistent_targets']
+                   'fresh_target_tuples','persistent_targets','persistent_final_only_no_feedback',
+                   'event','persistent_policy_states']
             w=csv.DictWriter(f,fieldnames=names);w.writeheader();w.writerows(result['sequential_semantic_freshness'])
         with (args.output/'extractor-summary.csv').open('w',newline='') as f:
             names=['input_bits','entropy_bits','output_bits','flat_sources','affine_seeds',
@@ -86,6 +89,12 @@ def main() -> int:
                    'entropy_slack','distance_bound','required_fresh_entropy_at_this_slack']
             w=csv.DictWriter(f,fieldnames=names);w.writeheader()
             for row in result['entropy_ratchet']['entropy_budgets']:
+                w.writerow({k:row[k] for k in names})
+        with (args.output/'extractor-contract-summary.csv').open('w',newline='') as f:
+            names=['output_bits','min_entropy_bits','smoothing','hashing_term',
+                   'output_smoothing_cost','marginal_restoration_cost','fixed_marginal_bound']
+            w=csv.DictWriter(f,fieldnames=names);w.writeheader()
+            for row in result['extractor_interface']['budgets']:
                 w.writerow({k:row[k] for k in names})
     print(json.dumps({'status':'finite checks passed','output':str(args.output),**stats},sort_keys=True))
     return 0

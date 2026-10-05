@@ -212,6 +212,128 @@
       }
     ]
   },
+  "extractor_interface": {
+    "budgets": [
+      {
+        "fixed_marginal_bound": "1/8",
+        "hashing_term": "1/8",
+        "marginal_restoration_cost": "0/1",
+        "min_entropy_bits": 6,
+        "output_bits": 2,
+        "output_smoothing_cost": "0/1",
+        "single_eta_with_same_marginal_witness": true,
+        "smoothing": "0/1"
+      },
+      {
+        "fixed_marginal_bound": "5/32",
+        "hashing_term": "1/8",
+        "marginal_restoration_cost": "1/64",
+        "min_entropy_bits": 6,
+        "output_bits": 2,
+        "output_smoothing_cost": "1/64",
+        "single_eta_with_same_marginal_witness": true,
+        "smoothing": "1/64"
+      },
+      {
+        "fixed_marginal_bound": "3/64",
+        "hashing_term": "1/32",
+        "marginal_restoration_cost": "1/128",
+        "min_entropy_bits": 9,
+        "output_bits": 1,
+        "output_smoothing_cost": "1/128",
+        "single_eta_with_same_marginal_witness": true,
+        "smoothing": "1/128"
+      }
+    ],
+    "contract": "subnormalized purified-distance smoothing; normalized actual states; fixed actual marginal; 2 eta",
+    "nonzero_smoothing_cq": {
+      "actual_fixed_marginal_distance": 0.42677669529663687,
+      "arithmetic": "rational inputs; 2x2 spectral norms evaluated in binary64",
+      "commutator_squared_hilbert_schmidt_norm": "1/32",
+      "generalized_trace_distance": "1/16",
+      "input_cq_blocks": [
+        [
+          "1/2",
+          "0/1",
+          "0/1",
+          "0/1"
+        ],
+        [
+          "1/4",
+          "1/4",
+          "1/4",
+          "1/4"
+        ]
+      ],
+      "marginal_restoration_distance": 0.03125,
+      "output_smoothing_distance": 0.03125,
+      "purified_distance": "1/4",
+      "purified_distance_squared": "1/16",
+      "renormalized": false,
+      "scope": "one explicit noncommuting cq witness with eta>0; not a general quantum proof",
+      "three_term_bound": 0.4626031518405971,
+      "tolerance": 1e-12,
+      "witness_hash_bound": 0.6325370754671991,
+      "witness_own_marginal_distance": 0.4001031518405971,
+      "witness_trace": "15/16"
+    },
+    "optimized_marginal": {
+      "actual_side_marginal": [
+        "1/8",
+        "7/8"
+      ],
+      "fixed_distance": "3/16",
+      "joint_mass": [
+        "0/1",
+        "0/1",
+        "0/1",
+        "1/8",
+        "1/8",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      "optimized_distance": "1/8",
+      "optimizing_side_marginal": [
+        "0/1",
+        "1/1"
+      ],
+      "same_distance_inference_rejected": true,
+      "scope": "classical distance-definition diagnostic, not a hash counterexample"
+    },
+    "retired_input": {
+      "fresh_bits": 2,
+      "image_size_histogram": {
+        "1": 4,
+        "2": 84,
+        "4": 168
+      },
+      "inputs_per_seed": 8,
+      "mismatches": 0,
+      "old_bits": 1,
+      "output_bits": 2,
+      "output_histogram": {
+        "0": 512,
+        "1": 512,
+        "2": 512,
+        "3": 512
+      },
+      "public_seeds": 256,
+      "recomputed_points": 2048,
+      "scope": "public recomputation from disclosed retired input; no physical-erasure measurement"
+    },
+    "xor_controls": {
+      "correlated_output_support": [
+        0,
+        2
+      ],
+      "correlated_source_joint_distance": "1/2",
+      "correlated_source_points": 4,
+      "independent_source_joint_distance": "0/1",
+      "independent_source_points": 8,
+      "violated_condition": "rho_XCB = tau_X tensor rho_CB"
+    }
+  },
   "fresh_rekey": {
     "independent_new_secret_success": "1/4",
     "joint_points": 16,
@@ -802,14 +924,17 @@
     "restored_points": 16,
     "restored_target_success": "1/1"
   },
-  "scope": "finite classical checks, not general proof or quantum soundness evidence",
+  "scope": "finite classical checks plus one labelled cq diagnostic; not a general proof or quantum soundness experiment",
   "sequential_semantic_freshness": [
     {
       "bits": 3,
+      "event": "any session guess correct; public rejection after each wrong guess",
       "fresh_target_tuples": 64,
       "fresh_targets_lifetime_success": "7/16",
       "leakage_bits_per_session": 1,
-      "persistent_target_success": "1/2",
+      "persistent_final_only_no_feedback": "1/2",
+      "persistent_policy_states": 217,
+      "persistent_target_success": "3/4",
       "persistent_targets": 8,
       "sessions": 2,
       "single_session_success": "1/4",
@@ -817,9 +942,12 @@
     },
     {
       "bits": 4,
+      "event": "any session guess correct; public rejection after each wrong guess",
       "fresh_target_tuples": 65536,
       "fresh_targets_lifetime_success": "1695/4096",
       "leakage_bits_per_session": 1,
+      "persistent_final_only_no_feedback": "1/1",
+      "persistent_policy_states": 15,
       "persistent_target_success": "1/1",
       "persistent_targets": 16,
       "sessions": 4,
@@ -828,9 +956,12 @@
     },
     {
       "bits": 4,
+      "event": "any session guess correct; public rejection after each wrong guess",
       "fresh_target_tuples": 256,
       "fresh_targets_lifetime_success": "7/16",
       "leakage_bits_per_session": 2,
+      "persistent_final_only_no_feedback": "1/1",
+      "persistent_policy_states": 27,
       "persistent_target_success": "1/1",
       "persistent_targets": 16,
       "sessions": 2,
@@ -839,14 +970,73 @@
     },
     {
       "bits": 5,
+      "event": "any session guess correct; public rejection after each wrong guess",
       "fresh_target_tuples": 32768,
       "fresh_targets_lifetime_success": "721/4096",
       "leakage_bits_per_session": 1,
-      "persistent_target_success": "1/4",
+      "persistent_final_only_no_feedback": "1/4",
+      "persistent_policy_states": 24479,
+      "persistent_target_success": "7/16",
       "persistent_targets": 32,
       "sessions": 3,
       "single_session_success": "1/16",
       "union_bound": "3/16"
+    },
+    {
+      "bits": 3,
+      "event": "any session guess correct; public rejection after each wrong guess",
+      "fresh_target_tuples": 512,
+      "fresh_targets_lifetime_success": "169/512",
+      "leakage_bits_per_session": 0,
+      "persistent_final_only_no_feedback": "1/8",
+      "persistent_policy_states": 93,
+      "persistent_target_success": "3/8",
+      "persistent_targets": 8,
+      "sessions": 3,
+      "single_session_success": "1/8",
+      "union_bound": "3/8"
+    },
+    {
+      "bits": 3,
+      "event": "any session guess correct; public rejection after each wrong guess",
+      "fresh_target_tuples": 8,
+      "fresh_targets_lifetime_success": "1/4",
+      "leakage_bits_per_session": 1,
+      "persistent_final_only_no_feedback": "1/4",
+      "persistent_policy_states": 39,
+      "persistent_target_success": "1/4",
+      "persistent_targets": 8,
+      "sessions": 1,
+      "single_session_success": "1/4",
+      "union_bound": "1/4"
+    },
+    {
+      "bits": 2,
+      "event": "any session guess correct; public rejection after each wrong guess",
+      "fresh_target_tuples": 4,
+      "fresh_targets_lifetime_success": "1/1",
+      "leakage_bits_per_session": 2,
+      "persistent_final_only_no_feedback": "1/1",
+      "persistent_policy_states": 7,
+      "persistent_target_success": "1/1",
+      "persistent_targets": 4,
+      "sessions": 1,
+      "single_session_success": "1/1",
+      "union_bound": "1/1"
+    },
+    {
+      "bits": 2,
+      "event": "any session guess correct; public rejection after each wrong guess",
+      "fresh_target_tuples": 256,
+      "fresh_targets_lifetime_success": "175/256",
+      "leakage_bits_per_session": 0,
+      "persistent_final_only_no_feedback": "1/4",
+      "persistent_policy_states": 1,
+      "persistent_target_success": "1/1",
+      "persistent_targets": 4,
+      "sessions": 4,
+      "single_session_success": "1/4",
+      "union_bound": "1/1"
     }
   ],
   "shares": [

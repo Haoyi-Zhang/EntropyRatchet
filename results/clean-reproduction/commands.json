@@ -1,52 +1,110 @@
-{
-  "commands": [
-    {
-      "name": "finite-calculation",
-      "cwd": "artifact",
-      "command": "python3 reproduce.py --output results/recomputed",
-      "exit_code": 0
-    },
-    {
-      "name": "second-calculation",
-      "cwd": "artifact",
-      "command": "python3 verify.py results/recomputed/exact-results.json --output results/recomputed/second-calculation.json",
-      "exit_code": 0
-    },
-    {
-      "name": "regression-tests",
-      "cwd": "artifact",
-      "command": "python3 -m unittest discover -s tests -v",
-      "exit_code": 0
-    },
-    {
-      "name": "table-generation",
-      "cwd": "artifact",
-      "command": "python3 render_tables.py --result results/recomputed/exact-results.json --output results/recomputed/tables",
-      "exit_code": 0
-    },
-    {
-      "name": "source-audit",
-      "cwd": "artifact",
-      "command": "python3 audit_sources.py --output results/recomputed/source-audit.json",
-      "exit_code": 0
-    },
-    {
-      "name": "manuscript-table-generation",
-      "cwd": ".",
-      "command": "python3 artifact/render_tables.py --result artifact/results/recomputed/exact-results.json --output paper/tables",
-      "exit_code": 0
-    },
-    {
-      "name": "manuscript-build",
-      "cwd": "paper",
-      "command": "sh build.sh",
-      "exit_code": 0
-    },
-    {
-      "name": "project-source-audit",
-      "cwd": ".",
-      "command": "python3 artifact/audit_sources.py --base artifact --manuscript paper/main.tex --bbl paper/main.bbl --output results/recomputed/project-source-audit.json",
-      "exit_code": 0
-    }
-  ]
-}
+[
+  {
+    "name": "finite-calculation",
+    "cwd": "artifact",
+    "command": [
+      "python3",
+      "reproduce.py",
+      "--output",
+      "results/clean-reproduction"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 2.783514
+  },
+  {
+    "name": "second-calculation",
+    "cwd": "artifact",
+    "command": [
+      "python3",
+      "verify.py",
+      "results/clean-reproduction/exact-results.json",
+      "--output",
+      "results/clean-reproduction/second-calculation.json"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 1.826877
+  },
+  {
+    "name": "regression-tests",
+    "cwd": "artifact",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 2.533668
+  },
+  {
+    "name": "table-generation",
+    "cwd": "artifact",
+    "command": [
+      "python3",
+      "render_tables.py",
+      "--result",
+      "results/clean-reproduction/exact-results.json",
+      "--output",
+      "results/clean-reproduction/tables"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 0.855405
+  },
+  {
+    "name": "source-audit",
+    "cwd": "artifact",
+    "command": [
+      "python3",
+      "audit_sources.py",
+      "--output",
+      "results/clean-reproduction/source-audit.json"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 0.74288
+  },
+  {
+    "name": "manuscript-build",
+    "cwd": ".",
+    "command": [
+      "sh",
+      "paper/build.sh"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 3.74875
+  },
+  {
+    "name": "project-source-audit",
+    "cwd": ".",
+    "command": [
+      "python3",
+      "artifact/audit_sources.py",
+      "--base",
+      "artifact",
+      "--manuscript",
+      "paper/main.tex",
+      "--bbl",
+      "paper/main.bbl",
+      "--output",
+      "results/clean-reproduction/project-source-audit.json"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 0.845991
+  },
+  {
+    "name": "interface-audit",
+    "cwd": ".",
+    "command": [
+      "python3",
+      "artifact/audit_interface.py",
+      "--manuscript",
+      "paper/main.tex",
+      "--output",
+      "artifact/results/clean-reproduction/interface-audit.json"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 0.720921
+  }
+]

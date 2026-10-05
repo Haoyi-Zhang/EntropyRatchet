@@ -7,16 +7,19 @@ assets.  Stable locators, roles, reading depth, and calibration cohorts for all
 records are in `external_resources.csv`.  No external paper bytes are bundled,
 and the repository license does not cover cited works.
 
-## Frozen reading standard
+## Inherited reading record and current focused verification
 
 `literature-calibration.md` records a structural full-text calibration of 22
 papers: twelve closest, five influential foundations, and five adjacent-model
-works.  For each, the review followed the motivating problem, adversarial
+works.  That inherited record describes following the motivating problem, adversarial
 interface, principal theorem, proof architecture, assumptions, and stated
 boundary.  This is stronger than title/abstract screening but is not line-by-
 line proof certification, independent peer review, an exhaustive search, or an
 external novelty opinion.  The remaining 62 references retain claim-level or
-bibliographic depth labels.
+bibliographic depth labels. This continuation rechecked the actual definitions
+and proof passages in arXiv:1002.2436, not every proof in all 84 references.
+The executable audit remains an offline consistency check, not full-text
+certification. The current fixed-marginal argument is self-contained.
 
 ## Verification lineage
 
@@ -82,24 +85,20 @@ not leave the claimed fresh-key compiler incomplete.
 
 The final bibliography has 84 unique keys, all cited, and the same key set is
 frozen in `references.bib`, `manuscript-citations.txt`,
-`bibliography_registry.csv`, and `literature_matrix.csv`.  The 2026-09-18 audit
-corrected the `Leakage-Resilient Storage` author/record to Francesco Davì and
-ePrint 2009/399, corrected the second author of the 2026 qubit-verification-
-structure paper to Itay Shalit, moved Akavia--Goldwasser--Vaikuntanathan to its
-actual TCC 2009 record, and moved Juma--Vahlis to its actual CRYPTO 2010 record.
-It also added three directly relevant 2025--2026 works and replaced generic DBLP
-search locators with 68 DOIs, 13 arXiv records, 2 ePrint records, and 1
-institutional record. Forty-five entries were checked against a publisher,
-archive, or institutional record; 39 retain the explicitly weaker
-bibliographic-screening status. The offline executable audit checks internal
-metadata, type-specific publication fields, and identifier consistency; it does
-not resolve every locator, certify every proof, or replace publisher-side
-validation and independent citation review.
+`bibliography_registry.csv`, and `literature_matrix.csv`.  The registry distinguishes 45 publisher/archive/institutional-record checks
+from 39 bibliographic-screening records inherited with the project. They are not
+84 new full-text readings. The source audit checks metadata, publication fields,
+and identifier consistency. The fixed-marginal repair specifically rereads the
+2010 arXiv text's smoothing definitions, Definition 3, Lemma 4 proof and
+Theorem 6. The 2011 journal locator and preprint are one bibliography entry,
+not counted twice. No source theorem is claimed to use the fixed actual
+marginal solely on the basis of its optimized-distance statement.
 
 ## Executable boundary
 
 No external implementation, benchmark, dataset, solver, or paper file is
 required by the exact artifact.  The Python code uses only the standard library
 and enumerates synthetic finite games declared in `inputs/instances.json`.
-Those checks are classical corroboration, not quantum verification experiments,
+The main checks are classical; the separately labelled small cq witness is a
+numerical distance diagnostic. Neither is a quantum verification experiment,
 LWE attacks, hardware measurements, or deployment evidence.

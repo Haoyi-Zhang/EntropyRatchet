@@ -1,3 +1,19 @@
+test_complete_small_policy_grid (test_extractor_contract.ContractTests.test_complete_small_policy_grid) ... ok
+test_cq_witness_has_nonzero_smoothing_and_commutator (test_extractor_contract.ContractTests.test_cq_witness_has_nonzero_smoothing_and_commutator) ... ok
+test_fresh_small_boundary_grid (test_extractor_contract.ContractTests.test_fresh_small_boundary_grid) ... ok
+test_invalid_contract_parameters_rejected (test_extractor_contract.ContractTests.test_invalid_contract_parameters_rejected) ... ok
+test_lifetime_counterexamples (test_extractor_contract.ContractTests.test_lifetime_counterexamples) ... ok
+test_lifetime_no_leakage_repeated_guesses (test_extractor_contract.ContractTests.test_lifetime_no_leakage_repeated_guesses) ... ok
+test_lifetime_single_session_and_saturation (test_extractor_contract.ContractTests.test_lifetime_single_session_and_saturation) ... ok
+test_nonzero_smoothing_pays_both_costs (test_extractor_contract.ContractTests.test_nonzero_smoothing_pays_both_costs) ... ok
+test_optimized_side_is_not_actual_side (test_extractor_contract.ContractTests.test_optimized_side_is_not_actual_side) ... ok
+test_retired_input_mutation_rejected (test_extractor_contract.ContractTests.test_retired_input_mutation_rejected) ... ok
+test_retired_input_recomputed_not_rollback (test_extractor_contract.ContractTests.test_retired_input_recomputed_not_rollback) ... ok
+test_second_interface_calculation (test_extractor_contract.ContractTests.test_second_interface_calculation) ... ok
+test_single_eta_mutation_rejected (test_extractor_contract.ContractTests.test_single_eta_mutation_rejected) ... ok
+test_smoothing_renormalization_mutation_rejected (test_extractor_contract.ContractTests.test_smoothing_renormalization_mutation_rejected) ... ok
+test_xor_joint_independence_controls (test_extractor_contract.ContractTests.test_xor_joint_independence_controls) ... ok
+test_zero_smoothing_recovers_hash_term (test_extractor_contract.ContractTests.test_zero_smoothing_recovers_hash_term) ... ok
 test_affine_flat_source_distance (test_finite_games.ModelTests.test_affine_flat_source_distance) ... ok
 test_controls_agree (test_finite_games.ModelTests.test_controls_agree) ... ok
 test_domain_guards (test_finite_games.ModelTests.test_domain_guards) ... ok
@@ -24,6 +40,10 @@ test_reduction_arithmetic (test_finite_games.ModelTests.test_reduction_arithmeti
 test_rollback_semantic_freshness (test_finite_games.ModelTests.test_rollback_semantic_freshness) ... ok
 test_tree_address (test_finite_games.ModelTests.test_tree_address) ... ok
 test_tree_recurrence (test_finite_games.ModelTests.test_tree_recurrence) ... ok
+test_consistent_fixture (test_interface_audit.InterfaceAuditTests.test_consistent_fixture) ... ok
+test_nonexistent_evidence_target_rejected (test_interface_audit.InterfaceAuditTests.test_nonexistent_evidence_target_rejected) ... ok
+test_single_eta_drift_rejected (test_interface_audit.InterfaceAuditTests.test_single_eta_drift_rejected) ... ok
+test_stale_proof_excerpt_rejected (test_interface_audit.InterfaceAuditTests.test_stale_proof_excerpt_rejected) ... ok
 test_current_source_packet_passes (test_source_audit.SourceAuditTests.test_current_source_packet_passes) ... ok
 test_duplicate_bibtex_key_rejected (test_source_audit.SourceAuditTests.test_duplicate_bibtex_key_rejected) ... ok
 test_duplicate_primary_locator_rejected (test_source_audit.SourceAuditTests.test_duplicate_primary_locator_rejected) ... ok
@@ -37,6 +57,6 @@ test_uncited_reference_rejected (test_source_audit.SourceAuditTests.test_uncited
 test_year_mismatch_rejected (test_source_audit.SourceAuditTests.test_year_mismatch_rejected) ... ok
 
 ----------------------------------------------------------------------
-Ran 37 tests in 1.180s
+Ran 57 tests in 1.578s
 
 OK

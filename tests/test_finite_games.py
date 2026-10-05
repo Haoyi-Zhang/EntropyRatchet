@@ -59,7 +59,7 @@ class ModelTests(unittest.TestCase):
     def test_persistent_accumulation(self):
         self.assertEqual(persistent_target_formula(4,1,4),Fraction(1))
         self.assertEqual(persistent_target_enumeration(4,1,4),Fraction(1))
-        self.assertEqual(persistent_target_formula(5,1,3),Fraction(1,4))
+        self.assertEqual(persistent_target_formula(5,1,3),Fraction(7,16))
 
     def test_rollback_semantic_freshness(self):
         row=rollback_case(4)

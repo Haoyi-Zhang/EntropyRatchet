@@ -1,19 +1,14 @@
 {
-  "final_log": {
-    "latex_warnings": 0,
-    "overfull_hbox": 0,
-    "overfull_vbox": 0,
-    "underfull_hbox": 0,
-    "underfull_vbox": 0,
-    "unresolved_citations": 0,
-    "unresolved_references": 0
-  },
   "pages": 36,
-  "pdf_metadata_present": [
-    "title",
-    "author",
-    "subject",
-    "keywords"
-  ],
-  "printed_bibliography_items": 84
+  "printed_references": 84,
+  "warnings": {
+    "undefined": 0,
+    "overfull": 0,
+    "underfull": 0,
+    "latex_package_warning": 0
+  },
+  "tests": 57,
+  "figure_count": 2,
+  "table_count": 8,
+  "scope": "build, regression, source and interface consistency; not independent mathematical or publication certification"
 }

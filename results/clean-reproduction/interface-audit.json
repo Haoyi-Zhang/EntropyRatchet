@@ -1,0 +1,12 @@
+{
+  "claim_rows": 43,
+  "equations": {
+    "eq:delta-j": "2 eta present",
+    "eq:intro-extractor": "2 eta present",
+    "eq:quantum-lhl": "2 eta present"
+  },
+  "passed": true,
+  "proof_excerpt_matches": true,
+  "resolved_targets": 42,
+  "scope": "text/label consistency only; no automated certification of general proof"
+}

@@ -263,6 +263,118 @@ def verify_entropy_ratchet(data: dict, config: dict) -> dict:
             'entropy_barrier_cases':len(expected_barriers),
             'ratchet_lifetime_cases':len(expected_lifetime)}
 
+def persistent_prefix_second(bits: int, leakage: int, sessions: int) -> Fraction:
+    """Optimal fixed-prefix policy by a separate tuple-valued recurrence.
+
+    It is a lower bound for arbitrary coordinate queries.  Equality with the
+    decision-tree counting upper bound certifies the unrestricted optimum.
+    """
+    @lru_cache(None)
+    def recurse(candidates: tuple[int,...], step: int) -> int:
+        if not candidates or step == sessions:
+            return 0
+        seen = min(bits, (step+1)*leakage)
+        cells = defaultdict(list)
+        for target in candidates:
+            cells[target >> (bits-seen)].append(target)
+        total = 0
+        for cell in cells.values():
+            total += max(1 + recurse(tuple(x for x in cell if x != guess), step+1)
+                         for guess in cell)
+        return total
+    value = recurse(tuple(range(2**bits)),0)
+    bound = min(2**bits, sum(2**min(bits,j*leakage) for j in range(1,sessions+1)))
+    assert value == bound
+    return Fraction(value,2**bits)
+
+
+def verify_extractor_interface(data: dict, configs: list[dict]) -> dict:
+    """Separate arithmetic checks, not an implementation of the general proof."""
+    from math import sqrt
+    assert data['contract']=='subnormalized purified-distance smoothing; normalized actual states; fixed actual marginal; 2 eta'
+    budgets=[]
+    for cfg in configs:
+        eta=Fraction(cfg['smoothing'])
+        rest=Fraction(1,2)**((cfg['min_entropy_bits']-cfg['output_bits'])//2+1)
+        budgets.append({'output_bits':cfg['output_bits'],'min_entropy_bits':cfg['min_entropy_bits'],
+          'smoothing':ratio(eta),'hashing_term':ratio(rest),
+          'output_smoothing_cost':ratio(eta),'marginal_restoration_cost':ratio(eta),
+          'fixed_marginal_bound':ratio(rest+eta+eta),
+          'single_eta_with_same_marginal_witness':True})
+    assert data['budgets']==budgets
+    row=data['optimized_marginal']
+    mass=[Fraction(x) for x in row['joint_mass']]
+    assert mass==[Fraction(x,8) for x in (0,0,0,1,1,2,2,2)]
+    own=[sum(mass[i:i+4]) for i in (0,4)]
+    fixed=sum(abs(p-own[i//4]/4) for i,p in enumerate(mass))/2
+    # All objective breakpoints lie on this grid for these rational inputs.
+    optimum=min(sum(abs(p-([Fraction(t,8),1-Fraction(t,8)][i//4])/4)
+                    for i,p in enumerate(mass))/2 for t in range(9))
+    assert row['fixed_distance']==ratio(fixed) and row['optimized_distance']==ratio(optimum)
+    assert row['actual_side_marginal']==[ratio(x) for x in own]
+    assert row['optimizing_side_marginal']==['0/1','1/1']
+    assert row['same_distance_inference_rejected'] is True
+    q=data['nonzero_smoothing_cq']
+    assert q['input_cq_blocks']==[['1/2','0/1','0/1','0/1'],['1/4']*4]
+    a=sqrt(0.5)
+    distance=(1+a)/4
+    t=Fraction(q['witness_trace']);eta=Fraction(q['purified_distance'])
+    assert t==Fraction(15,16) and eta==Fraction(1,4) and eta**2==1-t
+    expected={
+      'actual_fixed_marginal_distance':distance,
+      'witness_own_marginal_distance':float(t)*distance,
+      'output_smoothing_distance':float(1-t)/2,
+      'marginal_restoration_distance':float(1-t)/2,
+      'three_term_bound':float(1-t)+float(t)*distance,
+      'witness_hash_bound':sqrt(float(t)*(1+a))/2}
+    for key,value in expected.items():
+        assert abs(q[key]-value) < 1e-12, (key,q[key],value)
+    assert q['purified_distance_squared']=='1/16'
+    assert q['generalized_trace_distance']=='1/16'
+    assert q['renormalized'] is False
+    assert q['commutator_squared_hilbert_schmidt_norm']=='1/32'
+    assert q['tolerance']==1e-12
+    x=data['xor_controls']
+    # Build the joint distribution by probability mass propagation.
+    corr=defaultdict(Fraction);ind=defaultdict(Fraction)
+    for c in [0,1]:
+        for u in [0,1]:corr[c,2*u]+=Fraction(1,4)
+        for pad in range(4):ind[c,pad^c]+=Fraction(1,8)
+    d0=sum(abs(corr[c,y]-Fraction(1,8)) for c in range(2) for y in range(4))/2
+    d1=sum(abs(ind[c,y]-Fraction(1,8)) for c in range(2) for y in range(4))/2
+    assert x['correlated_source_joint_distance']==ratio(d0)
+    assert x['independent_source_joint_distance']==ratio(d1)
+    assert x['correlated_output_support']==[0,2]
+    assert (x['correlated_source_points'],x['independent_source_points'])==(4,8)
+    assert x['violated_condition']=='rho_XCB = tau_X tensor rho_CB'
+    e=data['retired_input'];points=mismatches=0
+    image_sizes=Counter();output_counts=Counter()
+    # Enumerate source bit-tuples and matrix entries, not packed row masks.
+    for entries in product(range(2),repeat=6):
+        for offset in product(range(2),repeat=2):
+            seed_image=set()
+            for source in product(range(2),repeat=3):
+                z=tuple((sum(entries[3*i+j]*source[j] for j in range(3))+offset[i])%2
+                        for i in range(2))
+                # Encode the disclosed old/fresh components, then reconstruct
+                # by XORing column vectors, not by the forward dot products.
+                old=source[0];fresh=2*source[1]+source[2]
+                recovered=offset[0]+2*offset[1]
+                for j,bit in enumerate((old,fresh//2,fresh%2)):
+                    if bit:recovered ^= entries[j]+2*entries[3+j]
+                recomputed=(recovered%2,recovered//2)
+                seed_image.add(z);output_counts[str(z[0]+2*z[1])]+=1
+                points+=1;mismatches+=z!=recomputed
+            image_sizes[str(len(seed_image))]+=1
+    assert points==2048 and mismatches==0
+    assert e['image_size_histogram']==dict(image_sizes)=={'1':4,'2':84,'4':168}
+    assert e['output_histogram']==dict(output_counts)=={str(k):512 for k in range(4)}
+    assert {k:e[k] for k in ['old_bits','fresh_bits','output_bits','public_seeds','inputs_per_seed','recomputed_points','mismatches']}=={
+        'old_bits':1,'fresh_bits':2,'output_bits':2,'public_seeds':256,'inputs_per_seed':8,'recomputed_points':points,'mismatches':mismatches}
+    return {'contract_budget_cases':len(budgets),'nonzero_smoothing_cq_witnesses':1,
+            'retired_input_recomputations':points,'xor_joint_independence_controls':2}
+
+
 def check(data: dict) -> dict:
     base=Path(__file__).resolve().parent
     config=json.loads((base/'inputs/instances.json').read_text())
@@ -341,11 +453,14 @@ def check(data: dict) -> dict:
         p=Fraction(1,2**hidden)
         fresh=1-(1-p)**q
         union=min(Fraction(1),q*p)
-        persistent=Fraction(1,2**max(b-q*ell,0))
+        persistent=persistent_prefix_second(b,ell,q)
         assert row['single_session_success']==ratio(p)
         assert row['fresh_targets_lifetime_success']==ratio(fresh)
         assert row['union_bound']==ratio(union)
         assert row['persistent_target_success']==ratio(persistent)
+        assert row['persistent_final_only_no_feedback']==ratio(Fraction(1,2**max(b-q*ell,0)))
+        assert row['event']=='any session guess correct; public rejection after each wrong guess'
+        assert row['persistent_policy_states'] > 0
         assert row['fresh_target_tuples']==(2**b)**q
         assert row['persistent_targets']==2**b
         fresh_points+=row['fresh_target_tuples']
@@ -365,6 +480,7 @@ def check(data: dict) -> dict:
           'total_upper_bound':ratio(min(Fraction(1),nu+sum(terms,Fraction(0))))})
     assert data['reduction_loss']==expected_loss
 
+    interface_stats=verify_extractor_interface(data['extractor_interface'],config['contract_budget_cases'])
     ratchet_stats=verify_entropy_ratchet(data['entropy_ratchet'],config)
     ratchet_controls=ratchet_controls_second()
     assert len(data['ratchet_negative_controls'])==len(ratchet_controls)
@@ -382,8 +498,8 @@ def check(data: dict) -> dict:
       'prefix_cases':len(data['prefix']), 'negative_controls':len(controls),
       'fresh_target_tuples':fresh_points,
       'sequential_cases':len(rows), 'rollback_cases':1,
-      'ratchet_negative_controls':len(ratchet_controls), **ratchet_stats,
-      'status':'all stored finite results agree with second calculation'}
+      'ratchet_negative_controls':len(ratchet_controls), **ratchet_stats, **interface_stats,
+      'status':'checked scientific quantities agree; cq spectral values within declared tolerance'}
 
 
 def main() -> int:

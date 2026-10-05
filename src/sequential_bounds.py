@@ -7,6 +7,7 @@ quantum-verification protocol or replace the general reductions.
 from __future__ import annotations
 
 from fractions import Fraction
+from functools import lru_cache
 from itertools import product
 
 
@@ -49,22 +50,80 @@ def union_bound(bits: int, leakage_bits: int, sessions: int) -> Fraction:
     return min(Fraction(1), sessions * single_session_guess(bits, leakage_bits))
 
 
+def persistent_final_only_formula(bits: int, leakage_per_session: int, sessions: int) -> Fraction:
+    """One final guess, with no earlier guesses or rejection feedback."""
+    if bits < 1 or not 0 <= leakage_per_session <= bits or sessions < 1:
+        raise ValueError("invalid final-only parameters")
+    return Fraction(1, 1 << max(bits - leakage_per_session * sessions, 0))
+
+
 def persistent_target_formula(bits: int, leakage_per_session: int, sessions: int) -> Fraction:
-    """Guessing probability when sessions reveal disjoint coordinates of one target."""
-    if bits < 1 or leakage_per_session < 0 or sessions < 1:
-        raise ValueError("invalid persistent-target parameters")
-    learned = min(bits, leakage_per_session * sessions)
-    return Fraction(1, 1 << (bits - learned))
+    """Coordinate-query lifetime optimum, including one guess per session.
+
+    At most 2**(j*L) new secrets can be won in session j.  The full prefix
+    query tree attains the sum until saturation (proof P11).  This expression
+    is checked against an unrestricted coordinate-policy Bellman search.
+    """
+    if bits < 1 or not 0 <= leakage_per_session <= bits or sessions < 1:
+        raise ValueError("invalid lifetime parameters")
+    wins = sum(1 << min(bits, j * leakage_per_session)
+               for j in range(1, sessions + 1))
+    return Fraction(min(1 << bits, wins), 1 << bits)
+
+
+def persistent_policy_search(bits: int, leakage_per_session: int, sessions: int) -> tuple[Fraction, int]:
+    """Exhaust legal actions with memoization, over uniform posterior sets.
+
+    State = (remaining candidates, known coordinate mask, sessions left,
+    queries left before the current guess).  Rejection removes the guessed
+    candidate.  Classical leakage reads individual coordinates, not arbitrary
+    Boolean functions.  The maximum is attained by a deterministic strategy.
+    """
+    if not (1 <= bits <= 5 and 0 <= leakage_per_session <= bits and 1 <= sessions <= 5):
+        raise ValueError("policy search exceeds the frozen finite domain")
+    masks = tuple(sum(1 << x for x in range(1 << bits) if (x >> i) & 1)
+                  for i in range(bits))
+
+    @lru_cache(maxsize=None)
+    def value(candidates: int, known: int, remaining: int, queries: int) -> int:
+        count = candidates.bit_count()
+        if not count or not remaining:
+            return 0
+        # Repeated distinct guesses alone cover this posterior.
+        if remaining >= count:
+            return count
+        best = 0
+        if queries:
+            for i, mask in enumerate(masks):
+                if known & (1 << i):
+                    continue
+                left = candidates & mask
+                right = candidates ^ left
+                if not left or not right:
+                    continue  # a constant answer is dominated by not querying
+                candidate = (value(left, known | (1 << i), remaining, queries - 1)
+                             + value(right, known | (1 << i), remaining, queries - 1))
+                best = max(best, candidate)
+                if best == count:
+                    return best
+        # Stopping the query phase is legal, including when queries==0.
+        options = candidates
+        while options:
+            guess = options & -options
+            options ^= guess
+            best = max(best, 1 + value(candidates ^ guess, known, remaining - 1,
+                                       leakage_per_session))
+            if best == count:
+                return best
+        return best
+
+    wins = value((1 << (1 << bits)) - 1, 0, sessions, leakage_per_session)
+    return Fraction(wins, 1 << bits), value.cache_info().currsize
 
 
 def persistent_target_enumeration(bits: int, leakage_per_session: int, sessions: int) -> Fraction:
-    if bits > 12:
-        raise ValueError("enumeration exceeds the frozen finite domain")
-    size = 1 << bits
-    learned = min(bits, leakage_per_session * sessions)
-    hidden_mask = (1 << (bits - learned)) - 1
-    wins = sum((target & hidden_mask) == 0 for target in range(size))
-    return Fraction(wins, size)
+    """Exact full-policy recursion for the any-session success event."""
+    return persistent_policy_search(bits, leakage_per_session, sessions)[0]
 
 
 def rollback_case(bits: int) -> dict:
@@ -105,7 +164,7 @@ def sequential_cases(configs: list[dict]) -> list[dict]:
         sessions = int(cfg["sessions"])
         fresh_exact = fresh_lifetime_enumeration(bits, leakage, sessions)
         fresh_closed = fresh_lifetime_formula(bits, leakage, sessions)
-        persistent_exact = persistent_target_enumeration(bits, leakage, sessions)
+        persistent_exact, policy_states = persistent_policy_search(bits, leakage, sessions)
         persistent_closed = persistent_target_formula(bits, leakage, sessions)
         assert fresh_exact == fresh_closed
         assert persistent_exact == persistent_closed
@@ -117,6 +176,9 @@ def sequential_cases(configs: list[dict]) -> list[dict]:
             "fresh_targets_lifetime_success": rational(fresh_exact),
             "union_bound": rational(union_bound(bits, leakage, sessions)),
             "persistent_target_success": rational(persistent_exact),
+            "persistent_final_only_no_feedback": rational(persistent_final_only_formula(bits, leakage, sessions)),
+            "event": "any session guess correct; public rejection after each wrong guess",
+            "persistent_policy_states": policy_states,
             "fresh_target_tuples": (1 << bits) ** sessions,
             "persistent_targets": 1 << bits,
         })

@@ -153,49 +153,190 @@ conditioned on `not CtlFail`; hence the proof hides no division by
 
 ## 4. Quantum-proof entropy ledger
 
-For a cq state `V B`, with classical `V`,
+The following definitions and argument use ordinary trace distance for game
+hops and purified-distance smoothing over subnormalized witnesses. Formula (4)
+below is the fixed-actual-marginal interface; it is not the optimized-distance
+statement of Theorem 6 in arXiv:1002.2436. The proof is included in the article.
 
-    H_min(V|B) = -log p_guess(V|B).
+```latex
+All registers are finite dimensional.  Actual executions are normalized,
+including a classical abort flag; we never renormalize on a successful control
+check.  Write $\mathcal S_{\leq}=\{\sigma\succeq0:\operatorname{tr}\sigma\leq1\}$,
+$\Delta(\sigma,\omega)=\tfrac12\|\sigma-\omega\|_1$, and
+\[
+ \overline\Delta(\sigma,\omega)=\Delta(\sigma,\omega)
+       +\tfrac12|\operatorname{tr}\sigma-\operatorname{tr}\omega|,
+ \qquad P(\sigma,\omega)=\sqrt{1-\overline F(\sigma,\omega)^2},
+\]
+where
+$\overline F(\sigma,\omega)=\|\sqrt\sigma\sqrt\omega\|_1+
+\sqrt{(1-\operatorname{tr}\sigma)(1-\operatorname{tr}\omega)}$.
+Thus $\Delta\leq\overline\Delta\leq P$; on normalized states $\Delta$
+is the usual trace distance.  Let
+\[
+ \mathcal B_P^\eta(\rho)=\{\widetilde\rho\in\mathcal S_{\leq}:
+          P(\widetilde\rho,\rho)\leq\eta\},\qquad 0\leq\eta<1.
+\]
+We use subnormalized purified-distance smoothing, not a normalized
+trace-distance ball.  Conditional min-entropy and its smoothing are
+\[
+ \begin{split}
+ H_{\min}(V\mid B)_\sigma
+  &=\sup_{\omega_B\succeq0,\,\operatorname{tr}\omega_B=1}
+    \sup\{k:\sigma_{VB}\preceq2^{-k}I_V\otimes\omega_B\},\\
+ H_{\min}^\eta(V\mid B)_\rho
+  &=\sup_{\widetilde\rho\in\mathcal B_P^\eta(\rho)}
+                     H_{\min}(V\mid B)_{\widetilde\rho}.
+ \end{split}
+\]
+For classical $V$, the first quantity equals $-\log p_{\rm guess}(V\mid B)$,
+with subnormalized guessing mass when necessary
+\cite{konig2009,tomamichel2016}.  Dephasing $V$ and any classical history in
+$B$ preserves $\rho$, contracts $P$, and preserves each feasible operator
+inequality above.  Hence the smoothing witness may be chosen cq without
+changing the smooth-entropy supremum.  It need not have the actual marginal $\rho_B$ or
+trace one.  The zero operator lies outside these balls for normalized $\rho$
+and $\eta<1$.
 
-A strong quantum-proof seeded extractor satisfies
+Let $D$ be an independent uniform seed and $K=h_D(V)\in\bits^m$ for a
+two-universal family.  Put $\rho_{KDB}=\mathcal H(\rho_{VB})$, where
+$\mathcal H$ appends the seed and hashes.  The interface needed by the
+compiler is
+\begin{equation}\label{eq:quantum-lhl}
+ \Delta\bigl(\rho_{KDB},\tau_K\otimes\tau_D\otimes\rho_B\bigr)
+ \leq 2\eta+\frac12\sqrt{2^{m-H_{\min}^\eta(V\mid B)_\rho}},
+\end{equation}
+where $\tau$ denotes a normalized uniform state.  The ideal state keeps the
+\emph{actual} $B$ marginal.  Definition~3 and Theorem~6 of
+the arXiv text of Tomamichel et al.\ \cite{tomamichel2011} state distance to a uniform
+output with an optimized side-information state.  Their theorem statement
+alone does not identify these two distances.  The following argument retains
+the fixed-marginal intermediate inequality in their Lemma~4 and proves the
+precise interface used here.
 
-    Delta(D Ext_D(V) B, D U_m B) <= delta
+\begin{proof}[Proof of Eq.~\eqref{eq:quantum-lhl}]
+First take an arbitrary subnormalized cq state
+$\sigma_{VB}=\sum_v|v\rangle\langle v|\otimes\sigma_v$ with
+$H_{\min}(V\mid B)_\sigma\geq k$.  Choose a normalized $\omega_B$ satisfying
+$\sigma_v\preceq2^{-k}\omega_B$; a limiting witness gives the same bound
+if the supremum is not attained.  Inverses below are restricted to its support.
+Set $M=2^m$, $A_v=\omega_B^{-1/4}\sigma_v\omega_B^{-1/4}$,
+$A=\sum_vA_v$, and
+$T_{d,z}=\sum_{v:h_d(v)=z}A_v-A/M$.
+H\"older's inequality gives
+\[
+ \left\|\sum_{v:h_d(v)=z}\sigma_v-\sigma_B/M\right\|_1
+ \leq \sqrt{\operatorname{tr}(T_{d,z}^2)},
+\]
+because $\operatorname{tr}\omega_B=1$.  Cauchy--Schwarz over output values
+and the seed, followed by two-universality, yields
+\[
+ \begin{split}
+ 4\Delta\bigl(\mathcal H(\sigma),\tau_K\otimes\tau_D\otimes\sigma_B\bigr)^2
+ &\leq M\,\mathbb E_d\sum_z\operatorname{tr}(T_{d,z}^2)\\
+ &=M\sum_{v,w}\bigl(\Pr_d[h_d(v)=h_d(w)]-M^{-1}\bigr)
+                         \operatorname{tr}(A_vA_w)\\
+ &\leq M\sum_v\operatorname{tr}(A_v^2)
+ \leq 2^{m-k}\operatorname{tr}\sigma
+ \leq 2^{m-k}.
+ \end{split}
+\]
+For the penultimate step use
+$A_v\preceq2^{-k}\omega_B^{1/2}$ and
+$\operatorname{tr}(A_v\omega_B^{1/2})=\operatorname{tr}\sigma_v$.
+Cross terms have nonpositive coefficients and
+$\operatorname{tr}(A_vA_w)\geq0$.
+This proves the \emph{unsmoothed own-marginal} bound, including for
+subnormalized states; it does not replace $\sigma_B$ by $\omega_B$.
 
-for an independent uniform public seed `D`.  For two-universal hashing,
+Now choose a cq smoothing witness $\widetilde\rho$ with min-entropy $k$,
+where $k$ approaches $H_{\min}^\eta(V\mid B)_\rho$.
+Contractivity under hashing and partial trace gives
+\[
+ \Delta(\mathcal H(\rho),\mathcal H(\widetilde\rho))\leq\eta,
+ \qquad \Delta(\rho_B,\widetilde\rho_B)\leq\eta.
+\]
+The three-term triangle inequality is therefore
+\[
+ \begin{split}
+ \Delta(\rho_{KDB},\tau_K\otimes\tau_D\otimes\rho_B)
+ &\leq\Delta(\mathcal H(\rho),\mathcal H(\widetilde\rho))\\
+ &\quad+\Delta(\mathcal H(\widetilde\rho),
+                  \tau_K\otimes\tau_D\otimes\widetilde\rho_B)\\
+ &\quad+\Delta(\widetilde\rho_B,\rho_B)
+ \leq 2\eta+\tfrac12\sqrt{2^{m-k}}.
+ \end{split}
+\]
+Let $k$ approach the smooth entropy.  No smoothing witness is renormalized.
+\end{proof}
+The same argument gives a single $\eta$ if a witness with the asserted
+entropy also satisfies $\widetilde\rho_B=\rho_B$.  Such a witness is necessarily
+normalized and is an additional marginal-constrained premise, not implied by
+ordinary smooth min-entropy.  We use the two-$\eta$ bound throughout.
 
-    delta <= eta + (1/2) sqrt(2^{m-H_min^eta(V|B)}).               (4)
+Let $\mathsf I_j$ replace the first $j$ ratchet outputs by independent uniform
+pairs inside the control-safe experiment.  Immediately before $D_j$ is sampled
+in $\mathsf I_{j-1}$, $B_{j-1}$ includes the full classical history, identifier,
+recovery information, ratchet observations, prover quantum register, and every
+other surviving register needed to continue after the update.  Retired inputs
+are not silently kept by this continuation.  The identifier is encoded at fixed
+length and contributes no entropy.  Conditional on each classical identifier
+block, the restricted hash family is two-universal; the preceding calculation
+applies to these unnormalized blocks, whose cross terms vanish.  It does not
+condition on a favorable history or require a per-history entropy bound.
 
-The public identifier is fixed before hashing, contributes no entropy, and is
-encoded canonically.  Restricting a two-universal family to inputs
-`encode(sid)||V` preserves two-universality as a function of `V` for each fixed
-identifier.
+\begin{definition}[Hybrid entropy ledger]\label{def:fresh}
+Use the normalized pre-seed state of $\mathsf I_{j-1}$ (including abort flags),
+with $V_j=C_{j-1}X_j$ and the smoothing convention above.  Update $j$ has
+parameters $(k_j,\eta_j)$ when $0\leq\eta_j<1$ and
+\begin{equation}\label{eq:entropy-ledger}
+ H_{\min}^{\eta_j}(C_{j-1}X_j\mid B_{j-1})\geq k_j.
+\end{equation}
+The seed is independent of this entire state.  For $m_j=c_j+r_j$, set
+\begin{equation}\label{eq:delta-j}
+ \delta_j=2\eta_j+\frac12\sqrt{2^{m_j-k_j}}.
+\end{equation}
+\end{definition}
+The entropy premise is evaluated in the predecessor hybrid; it is not assumed
+to survive earlier game hops without proof.
 
-Inside `G_safe`, define hybrid `I_j` so that the first `j` outputs
-`(C_i,R_i)` are replaced at creation by independent uniform strings, while later
-updates remain real.  Immediately before `D_j` is sampled in predecessor hybrid
-`I_{j-1}`, let `B_{j-1}` contain the complete classical history, recovery data,
-all ratchet observations, and the adversary's unmeasured quantum register.  The
-hybrid entropy ledger is
+\begin{lemma}[One update hop]\label{lem:extract-hop}
+Under Definition~\ref{def:fresh},
+$\Delta(\mathsf I_{j-1},\mathsf I_j)\leq\delta_j$.
+\end{lemma}
+\begin{proof}
+Equation~\eqref{eq:quantum-lhl} compares the actual hashed pair and
+$\tau_{C_jR_j}\otimes\tau_{D_j}\otimes\rho_{B_{j-1}}$,
+not an optimized historical marginal.  Both branches then apply the same
+trace-preserving continuation: split the pair, run $\mathsf{Key}$, and execute
+later protocol, leakage, update, and abort operations.  All of its input
+registers are present in the comparison.  Trace-distance contractivity proves
+the hop.  Padding a stopped execution by an identical absorbing abort state is
+trace preserving; no branch is postselected.
+\end{proof}
 
-    H_min^{eta_j}(C_{j-1} X_j | B_{j-1}) >= k_j.                   (5)
+\begin{corollary}[Ratchet semantic freshness]\label{cor:ratchet-freshness}
+The control-safe real process $\mathsf I_0$ is within distance at most
+$\sum_j\delta_j$ of the control-safe ideal process $\mathsf I_Q$, in which
+every $(C_j,R_j)$ is independent uniform when created.
+\end{corollary}
+\begin{proof}
+Apply Lemma~\ref{lem:extract-hop} successively and use the triangle inequality.
+\end{proof}
 
-It is intentionally stated in the predecessor hybrid; no entropy statement is
-silently transported through earlier game hops.
+```
 
-**Lemma 2 (one update hop).** For `m_j=c_j+r_j`, (5) implies
+In the numbered notation of this note:
 
-    Delta(I_{j-1},I_j) <= delta_j,
-    delta_j = eta_j + (1/2) sqrt(2^{m_j-k_j}).                     (6)
+    delta <= 2 eta + (1/2) sqrt(2^{m-H_min^eta(V|B)}).             (4)
+    H_min^{eta_j}(C_{j-1} X_j | B_{j-1}) >= k_j.                 (5)
+    delta_j = 2 eta_j + (1/2) sqrt(2^{m_j-k_j}).                 (6)
 
-**Proof.** Apply (4) to `V_j=C_{j-1}X_j`, side information `B_{j-1}`, and
-independent seed `D_j`.  Splitting the output, applying `Key`, running the
-protocol, exposing declared leakage, and executing all later sessions are CPTP
-maps; trace distance cannot increase.  QED.
-
-**Corollary 3 (ratchet semantic freshness).** `I_0` is within distance
-`sum_j delta_j` of `I_Q`, where every pair `(C_j,R_j)` is independent uniform at
-creation.  This follows by successive application of Lemma 2 and the triangle
-inequality.
+Lemma 2 is the one-hop statement above; Corollary 3 is its triangle-inequality
+sum. B includes every surviving continuation register. The entropy witness
+is never normalized, and the actual B marginal is never replaced by an
+optimizing auxiliary marginal. For per-hop target 2^{-tau}, the explicit split
+eta<=2^{-tau-2} and k-m>=2 tau is sufficient.
 
 ## 5. Sequential soundness theorem
 
@@ -279,19 +420,27 @@ retained state in addition to producing the session tape and statistical slack.
 ## 7. Exact full-entropy ratchet and sharpness
 
 When a full uniform source is available, no extractor loss is needed.  Let
-`X_j` be uniform on `{0,1}^{c+r}`, sampled after the last exposure and independent
-of the history.  For any public deterministic function `Phi`, set
+`X_j` be uniform on `{0,1}^{c+r}`, sampled after the last exposure and jointly independent of the old secret and complete side information:
+`rho_{X_j C_{j-1} B}=tau_{X_j} tensor rho_{C_{j-1} B}`.  For any public deterministic function `Phi`, set
 
     C_j || R_j = X_j XOR Phi(sid_j,C_{j-1}).                       (12)
 
-For every fixed history, identifier, and old retained state, XOR by the fixed
-value of `Phi` is a permutation.  Thus `(C_j,R_j)` is independent uniform,
+Within each classical old-secret/identifier block, XOR permutes a uniform
+source tensor the unchanged quantum block. Summing blocks gives independence
+without conditioning on a quantum state. Thus `(C_j,R_j)` is independent uniform,
 `delta_j=0`, and Theorem 4 gives
 
     Pr[Bad] <= min(1, rho + sum_j Gamma_j epsilon_j).              (13)
 
 The new `c+r` uniform bits, not an algebraic refresh of a legacy trapdoor, supply
 the post-exposure recovery.
+
+Joint independence is essential. With c=r=1, independent uniform C,U,
+X=(U,C), and Phi=(0,C), the output is (U,0) and its distance from uniform is
+1/2. X is marginally uniform but correlated with C, so it violates the tensor
+factorization above. With X a genuinely independent uniform two-bit source the
+same transformation has distance zero. Both controls are computed, not constants.
+
 
 The unit coefficients in (7) are componentwise sharp for the declared black-box
 class.  A system that falsely accepts exactly on `CtlFail` attains `rho`; a
@@ -309,10 +458,15 @@ distance at least `1-2^{k-m}` from uniform.  Its output support has size at most
 `2^k`, and uniform mass outside that support is the stated quantity.  Averaging
 over an independent public seed preserves the lower bound.
 
-**Erasure accounting.** Because the extractor and seed are public, later
+**Erasure accounting (theoretical claim).** Because the extractor and seed are public, later
 exposure of the complete retired input `(C_{j-1},X_j,D_j)` reconstructs
-`(C_j,R_j)` exactly.  That exposure must occur only after the relevant decision
-and then be charged against future state, or be included in `CtlFail`.
+`(C_j,R_j)` exactly.  That exposure must be charged to all affected ledgers: current tape leakage
+before the decision and retained-state observation for the next update. After
+the decision only the retained-state charge remains. Any uncharged exposure is
+a control failure.
+The separate micro-check recomputes all 2,048 three-bit-input/two-bit-output
+affine instances from their public seeds and disclosed complete retired inputs.
+It corroborates deterministic reconstruction only, not secure physical erasure.
 
 **Rollback.** If recovery restores an exposed retained state together with every
 input determining the next update, the next `(C,R)` pair is predictable with

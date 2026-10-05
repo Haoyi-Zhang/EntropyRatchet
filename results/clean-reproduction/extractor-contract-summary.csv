@@ -1,0 +1,4 @@
+output_bits,min_entropy_bits,smoothing,hashing_term,output_smoothing_cost,marginal_restoration_cost,fixed_marginal_bound
+2,6,0/1,1/8,0/1,0/1,1/8
+2,6,1/64,1/8,1/64,1/64,5/32
+1,9,1/128,1/32,1/128,1/128,3/64
