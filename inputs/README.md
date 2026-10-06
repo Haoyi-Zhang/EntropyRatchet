@@ -1,9 +1,10 @@
 # Frozen finite input domain
 
 `instances.json` declares every exact case, one-worker execution cap, CPU-time
-limit, and address-space limit.  Drivers reject duplicate or out-of-range
-configurations rather than silently sampling or truncating them.  No random seed
-is used because every selected case is enumerated.
+limit, and address-space limit. Finite routines reject out-of-range game
+parameters and invalid loss budgets; the second calculation rejects duplicate
+tree, share, prefix, and lifetime evidence rows. No random seed is used because
+every selected case is enumerated.
 
 ## Generic leakage cases
 

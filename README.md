@@ -3,7 +3,7 @@
 This standalone repository accompanies **Entropy-Ratcheted Soundness for
 Sequential Verification under State Exposure**.  It contains complete proof
 notes, frozen finite domains, two differently structured exact calculations,
-integrity and negative controls, 57 regression tests, an executable source audit,
+integrity and negative controls, 67 regression tests, an executable source audit,
 source ledgers, and LaTeX
 table generation.
 
@@ -36,6 +36,10 @@ min-entropy, strong seeded extraction, fixed-mode prefix lifting or an explicit
 chosen-mode base theorem, causal leakage transport, and a first-bad-session
 partition.  Completed base-verifier states may be released only after their
 decisions are terminal.
+
+The efficient prefix is simulated in an unmonitored ideal extension of the
+declared interfaces. Positive path inclusion bounds the control-safe first-bad
+event without running the proof-only failure monitor or conditioning on safety.
 
 ## Extractor distance contract
 
@@ -110,7 +114,7 @@ This checks equation/ledger/proof-excerpt consistency, not the truth of a theore
   fresh-secret, split-state, and rollback lemmas.
 - `inputs/instances.json` and `inputs/README.md` — every finite domain and cap.
 - `results/expected/` — frozen exact scientific outputs.
-- `results/clean-reproduction/` — final clean commands, exits, measurements,
+- `results/clean-reproduction/` — retained historical Linux commands, exits, measurements,
   output comparisons, and PDF inspection record.
 - `claim_evidence_ledger.csv` — material claims mapped to proofs/checkers,
   results, paper objects, maturity, and boundaries.
@@ -149,7 +153,27 @@ This checks equation/ledger/proof-excerpt consistency, not the truth of a theore
 | Nonzero-smoothing cq witness | 1 (numerical diagnostic) |
 | Public-seed/retired-input recomputations | 2,048 |
 | Joint-independence XOR controls | 2 |
-| Regression tests | 57 (see clean-reproduction log) |
+| Regression tests | 67 in current sources; 57 in the retained historical Linux log |
+
+The ten additional regressions cover loss-budget domains, table projection, and control-safe
+event inclusion. The latter exhausts 20,736 two-session monitor/acceptance
+tables and checks non-renormalized event mass; it is not an efficiency proof or
+a quantum computational experiment. Current local runs use CPython 3.12.14
+on Windows through a private resource adapter, not the recorded Linux host.
+The exact JSON and paper table bodies are unchanged. Frozen expected table
+bodies now match the renderer and paper, including all eight matched-event
+lifetime cases rather than the older four-case final-only projection.
+
+Complete retained-state support includes recorded secret-dependent control and
+abort symbols. The two-bit abort-flag regression raises guessing probability
+from 1/4 to 1/2 despite zero payload leakage, requiring support J=2 rather than
+J=1 in the normalized entropy ledger. The control-failure loss rho does not
+erase this observation.
+
+The standalone scientific workflow runs the finite driver, separate calculator,
+regressions, offline source audit, and table/result equality gates on Ubuntu
+24.04. Its raw command outputs are uploaded even on failure. A prepared
+workflow is not evidence of a completed hosted run.
 
 The public-tree domain enumerates every ordered pruned binary tree of depth at
 most four.  A direct path sampler and a separate recurrence agree that sampling

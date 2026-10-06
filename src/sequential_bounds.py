@@ -32,7 +32,8 @@ def fresh_lifetime_formula(bits: int, leakage_bits: int, sessions: int) -> Fract
 
 def fresh_lifetime_enumeration(bits: int, leakage_bits: int, sessions: int) -> Fraction:
     """Directly enumerate independent targets and a canonical optimal guesser."""
-    if bits > 5 or sessions > 5:
+    single_session_guess(bits, leakage_bits)
+    if not 1 <= sessions <= 5 or bits > 5:
         raise ValueError("enumeration exceeds the frozen finite domain")
     size = 1 << bits
     suffix_mask = (1 << (bits - leakage_bits)) - 1
@@ -190,8 +191,12 @@ def reduction_loss_cases(configs: list[dict]) -> list[dict]:
     out: list[dict] = []
     for cfg in configs:
         eps = Fraction(cfg["epsilon"])
-        leakage = [int(value) for value in cfg["leakage_bits"]]
+        leakage = list(cfg["leakage_bits"])
         freshness_failure = Fraction(cfg.get("freshness_failure", "0/1"))
+        if not (0 <= eps <= 1 and 0 <= freshness_failure <= 1):
+            raise ValueError("soundness and freshness probabilities must lie in [0,1]")
+        if any(type(ell) is not int or ell < 0 for ell in leakage):
+            raise ValueError("leakage lengths must be nonnegative integers")
         per_session = [min(Fraction(1), (1 << ell) * eps) for ell in leakage]
         total = min(Fraction(1), freshness_failure + sum(per_session, Fraction(0)))
         out.append({

@@ -187,9 +187,15 @@ def ratchet_loss_case(config: dict) -> dict:
     anchor = Fraction(config.get("anchor_failure", "0/1"))
     extractor = [Fraction(x) for x in config["extractor_errors"]]
     epsilon = [Fraction(x) for x in config["soundness_errors"]]
-    leakage = [int(x) for x in config["leakage_bits"]]
+    leakage = list(config["leakage_bits"])
     if not (len(extractor) == len(epsilon) == len(leakage)):
         raise ValueError("per-session arrays must have equal length")
+    if not 0 <= anchor <= 1 or any(not 0 <= eps <= 1 for eps in epsilon):
+        raise ValueError("anchor and soundness probabilities must lie in [0,1]")
+    if any(d < 0 for d in extractor):
+        raise ValueError("extractor error bounds must be nonnegative")
+    if any(type(ell) is not int or ell < 0 for ell in leakage):
+        raise ValueError("leakage lengths must be nonnegative integers")
     leakage_terms = [min(Fraction(1), (1 << ell) * eps)
                      for ell, eps in zip(leakage, epsilon)]
     per_session = [d + s for d, s in zip(extractor, leakage_terms)]

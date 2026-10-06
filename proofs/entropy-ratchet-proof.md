@@ -363,17 +363,33 @@ ordinary transcripts across sessions.
 Corollary 3 replaces every ratchet output by an independent uniform pair at cost
 `sum_j delta_j`.
 
-In the final hybrid, let `Bad_j` be the event that the first false acceptance is
-in session `j`.  These events are disjoint.  Fix `j`.  A one-session reduction
-straight-line simulates sessions `1,...,j-1`, including ordinary feedback,
-terminal old-state releases, retained-state observations, aborts, and the
-adversary's resulting quantum register.  Current `R_j` is independent uniform
-and unsampled, so the simulated history is a legal prefix under assumption 3.
+In the final control-safe hybrid, let `Bad_j` be the first false acceptance in
+session `j`. These events are disjoint. The proof-only control monitor need not
+be efficiently computable; its instrumented history is therefore not asserted
+to be an efficiently generated prefix. Define an unmonitored ideal extension
+of the declared interfaces with independent uniform ratchet outputs, the
+prescribed efficient protocol, and public scheduling rules. It exposes only
+declared observations and leakage and omits the proof monitor's forced
+rejection, not ordinary protocol aborts. Couple this extension to the safe
+hybrid until the first control failure; thereafter it may continue within the
+declared interfaces with fresh tapes, without simulating undeclared compromise
+effects. A safe `Bad_j` path is a current false-acceptance
+path in the extension. This inclusion is on positive unnormalized path blocks;
+it does not condition on control success or require detecting the failure.
+
+Fix `j`. The reduction simulates sessions `1,...,j-1` of the unmonitored
+extension, including ordinary feedback, terminal old-state releases,
+retained-state observations, ordinary aborts, and the adversary's quantum
+register. All prescribed prefix operations must be efficiently simulable from
+their declared inputs, as required by the prefix-robust definition. It neither
+evaluates the proof monitor nor tests whether earlier statements were false.
+Current `R_j` is independent uniform and unsampled, giving a legal efficient
+prefix under assumption 3.
 
 The reduction embeds the current base session and runs the public causal guesser
-`q_j` online.  Applying (1), every real current-leakage branch that leads to
-`Bad_j` contributes at least a `1/Gamma_j` fraction to a leakage-free base-game
-adversary.  Prefix-robust soundness therefore yields
+`q_j` online. Applying (1) bounds all current false acceptance in the
+unmonitored extension by `Gamma_j epsilon_j`. The safe first-bad blocks are a
+subcollection of these positive blocks, so prefix-robust soundness yields
 
     Pr[Bad_j] <= Gamma_j epsilon_j.
 
@@ -390,9 +406,11 @@ distribution; a per-secret support count is not enough.
 In predecessor hybrid `I_{j-1}`, suppose `C_{j-1}` is uniform on `c` bits and
 jointly independent of the prior side information and the simultaneously
 created base tape `R_{j-1}`.  The ordinary base protocol may read `R_{j-1}` but
-cannot read `C_{j-1}`.  Therefore any new correlation with `C_{j-1}` before the
-next update must enter through declared classical observation `W_{j-1}`, or be
-charged as a control failure.
+cannot read `C_{j-1}`. Require every new `C_{j-1}`-dependent observation available
+in `B_{j-1}`, including recorded control and abort information of the safe
+process, to enter the complete classical transcript `W_{j-1}`. A control-failure
+probability bound alone does not remove those symbols from a normalized
+entropy ledger.
 
 If `W_{j-1}` has joint support at most `J`, the cq support chain rule gives
 

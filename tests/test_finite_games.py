@@ -70,6 +70,18 @@ class ModelTests(unittest.TestCase):
         row=reduction_loss_cases([{'epsilon':'1/256','leakage_bits':[0,1,2,3]}])[0]
         self.assertEqual(row['total_upper_bound'],'15/256')
 
+    def test_fresh_enumeration_rejects_invalid_game_parameters(self):
+        for args in [(2,1,0),(2,1,-1),(2,-1,1),(2,3,1),(0,0,1)]:
+            with self.assertRaises(ValueError): fresh_lifetime_enumeration(*args)
+
+    def test_reduction_rejects_invalid_probability_and_length(self):
+        for cfg in [{'epsilon':'-1/4','leakage_bits':[0]},
+                    {'epsilon':'5/4','leakage_bits':[0]},
+                    {'epsilon':'1/4','freshness_failure':'-1/4','leakage_bits':[0]},
+                    {'epsilon':'1/4','leakage_bits':[-1]},
+                    {'epsilon':'1/4','leakage_bits':[1.9]}]:
+            with self.assertRaises(ValueError): reduction_loss_cases([cfg])
+
     def test_affine_flat_source_distance(self):
         self.assertEqual(joint_distance_for_flat_source((0,1,2,4),3,1),Fraction(3,16))
         row=extractor_case(3,2,1)
@@ -105,6 +117,20 @@ class ModelTests(unittest.TestCase):
           'extractor_errors':['1/32768']*4,'soundness_errors':['1/65536']*4,
           'leakage_bits':[2,2,2,2]})
         self.assertEqual(row['total_upper_bound'],'25/65536')
+
+    def test_ratchet_rejects_invalid_loss_parameters(self):
+        base={'anchor_failure':'0','extractor_errors':['0'],
+              'soundness_errors':['1/4'],'leakage_bits':[0]}
+        for key, value in [('anchor_failure','-1/4'),('anchor_failure','5/4'),
+                           ('extractor_errors',['-1/4']),('soundness_errors',['-1/4']),
+                           ('soundness_errors',['5/4']),('leakage_bits',[-1]),
+                           ('leakage_bits',[1.9])]:
+            with self.assertRaises(ValueError): ratchet_loss_case({**base,key:value})
+
+    def test_loose_nonnegative_extractor_bound_remains_legal(self):
+        row=ratchet_loss_case({'extractor_errors':['5/4'],
+                              'soundness_errors':['0'],'leakage_bits':[0]})
+        self.assertEqual(row['total_upper_bound'],'1/1')
 
     def test_ratchet_controls_agree(self):
         values=ratchet_controls_second()
