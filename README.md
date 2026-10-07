@@ -3,7 +3,7 @@
 This standalone repository accompanies **Entropy-Ratcheted Soundness for
 Sequential Verification under State Exposure**.  It contains complete proof
 notes, frozen finite domains, two differently structured exact calculations,
-integrity and negative controls, 67 regression tests, an executable source audit,
+integrity and negative controls, 72 current regression tests, an executable source audit,
 source ledgers, and LaTeX
 table generation.
 
@@ -57,6 +57,21 @@ as the manuscript. The source theorem's optimized-side definition is not
 silently identified with this distance. `extractor_interface` records separate
 budget arithmetic, a classical distance-definition example, and a noncommuting
 cq witness with eta=1/4. These tests do not establish the general theorem.
+
+The separate `src/cq_rational.py` path adds rational enclosures for that same
+owned real-symmetric 2x2 witness without replacing the binary64 diagnostic.
+Each square-root bracket is checked by exact squared inequalities. The norm
+identity `max(abs(trace), sqrt(discriminant))` propagates these brackets;
+directional endpoint comparisons establish only the finite triangle/hash
+inequalities. Precision doubles up to a declared cap, returning inconclusive
+when the intervals do not separate. Witness trace15/16, both smoothing costs,
+the actual marginal and no-renormalization convention remain unchanged.
+This is stronger finite arithmetic evidence, not an entropy optimizer or a
+quantum protocol/proof implementation. Run the portable five-method independent
+determinant/squared-norm regressions with
+`python -B tests/test_cq_rational.py -v`; ordinary discovery includes them.
+Historical results, float diagnostics and timings remain bound to their original
+sources. No performance claim or manuscript result is changed by this addition.
 
 ## Reproduce
 
@@ -153,7 +168,7 @@ This checks equation/ledger/proof-excerpt consistency, not the truth of a theore
 | Nonzero-smoothing cq witness | 1 (numerical diagnostic) |
 | Public-seed/retired-input recomputations | 2,048 |
 | Joint-independence XOR controls | 2 |
-| Regression tests | 67 in current sources; 57 in the retained historical Linux log |
+| Regression tests | 72 currently (67 before rational enclosures); 57 in the retained historical Linux log |
 
 The ten additional regressions cover loss-budget domains, table projection, and control-safe
 event inclusion. The latter exhausts 20,736 two-session monitor/acceptance
