@@ -2,7 +2,7 @@
 
 ## Purpose and reading standard
 
-This record calibrates the final manuscript against twelve closest papers, five
+This record compares the manuscript with twelve closest papers, five
 field-defining or demonstrably influential papers, and five adjacent-model
 papers.  The calibration is **structural**, not a claim of line-by-line proof
 certification: for every selected work the accessible full text or primary
@@ -63,7 +63,7 @@ every lemma before external publication.
 
 ## Cross-paper narrative and design matrix
 
-| Pattern | Closest papers | Influential papers | Adjacent papers | Final manuscript choice |
+| Pattern | Closest papers | Influential papers | Adjacent papers | Manuscript organization |
 |---|---|---|---|---|
 | Motivating problem | A concrete verification primitive and its setup/interaction limits | A sharply oriented exposure goal | A composition or compromise-recovery model | Begin with the temporal question: which random variable still protects the next decision after a snapshot or release? |
 | General principle | Protocol-specific soundness, leakage invariant, or extractor theorem | Operational entropy or period-indexed key evolution | Environment/history and separated state | Separate retained-state entropy (`J`), current causal leakage factor (`Gamma`), and control failure (`rho`). |
