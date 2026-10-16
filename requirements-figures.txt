@@ -1,0 +1,2 @@
+# Optional direct vector drawing only
+matplotlib>=3.6

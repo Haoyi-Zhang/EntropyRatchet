@@ -40,9 +40,9 @@ def main() -> int:
       'one_shot_soundness_implies_reuse':'Lift standalone soundness without a premise',
       'public_tags_restore_secret_entropy':'Treat public tags as secret entropy',
       'per_state_support_is_not_public_guessability':'Use per-state support as a public guessing factor'}
-    lines=[r'\begin{tabular}{p{9.5cm}rr}',r'\toprule',r'Incorrect inference & Actual & False bound \\',r'\midrule']
+    lines=[r'\begin{tabular}{p{9.5cm}rr}',r'\toprule',r'Incorrect inference & Countervalue & False bound \\',r'\midrule']
     for r in data['negative_controls']:
-        lines.append(names[r['name']]+' & '+frac(r['actual'])+' & '+frac(r['false_upper_bound'])+r' \\')
+        lines.append(names[r['name']]+' & '+('advantage '+frac(r['actual']) if r['name']=='multiply_distinguishing_advantage' else frac(r['actual']))+' & '+frac(r['false_upper_bound'])+r' \\')
     lines += [r'\bottomrule',r'\end{tabular}']
     (args.output/'controls.tex').write_text('\n'.join(lines)+'\n')
     lines=[r'\begin{tabular}{rrrrrr}',r'\toprule',
@@ -75,9 +75,9 @@ def main() -> int:
       'preloaded_randomness_is_post_exposure_fresh':'Treat preloaded randomness as post-exposure fresh',
       'rollback_without_monotone_anchor':'Ignore restoration without a monotone anchor',
       'unchecked_domain_tag_blocks_replay':'Assume an unchecked public tag blocks replay'}
-    lines=[r'\begin{tabular}{p{9.5cm}rr}',r'\toprule',r'Incorrect ratchet inference & Actual & False bound \\',r'\midrule']
+    lines=[r'\begin{tabular}{p{9.5cm}rr}',r'\toprule',r'Incorrect ratchet inference & Countervalue & False bound \\',r'\midrule']
     for r in data['ratchet_negative_controls']:
-        lines.append(names2[r['name']]+' & '+frac(r['actual'])+' & '+frac(r['false_upper_bound'])+r' \\')
+        lines.append(names2[r['name']]+' & '+(r'$\Delta\ge1/2$' if r['name']=='extract_more_uniform_bits_than_entropy' else frac(r['actual']))+' & '+frac(r['false_upper_bound'])+r' \\')
     lines += [r'\bottomrule',r'\end{tabular}']
     (args.output/'ratchet-controls.tex').write_text('\n'.join(lines)+'\n')
     print('Rendered seven manuscript tables from exact rational results.')

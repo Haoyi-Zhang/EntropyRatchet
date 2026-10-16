@@ -233,3 +233,13 @@ composition, physical-erasure guarantees, and fixed-public-key trapdoor
 evolution are excluded.  External papers are cited but not redistributed or
 relicensed.  No network, private cache, dataset, device, model API, or service is
 required for the exact artifact.
+
+## Paper diagrams
+
+Optional font-embedded vector output uses Python and Matplotlib from requirements-figures.txt:
+
+```sh
+python -B figures/draw_schematics.py --out figures
+```
+
+This draws the declared target and ratchet dependencies without running verification experiments.
